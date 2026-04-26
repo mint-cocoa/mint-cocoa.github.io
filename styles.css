@@ -16,6 +16,16 @@ body {
   background: #fff;
 }
 
+a {
+  text-underline-offset: 0.16em;
+}
+
+a:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 3px;
+}
+
 .quarto-title-block {
   display: none;
 }
@@ -161,6 +171,7 @@ body {
 }
 
 .guide-grid,
+.proof-grid,
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -183,6 +194,25 @@ body {
 
 .guide-card.devops {
   border-top-color: var(--green);
+}
+
+.proof-card,
+.maintenance-item {
+  min-height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.1rem;
+  background: #fff;
+}
+
+.proof-card h3,
+.maintenance-item h3 {
+  margin-top: 0;
+}
+
+.proof-card p,
+.maintenance-item p {
+  color: var(--muted);
 }
 
 .guide-card__icon {
@@ -286,6 +316,12 @@ body {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
+.maintenance-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .resource-group {
   min-width: 0;
 }
@@ -321,6 +357,8 @@ code {
   .home-hero,
   .runtime-layout,
   .guide-grid,
+  .proof-grid,
+  .maintenance-list,
   .flow-map,
   .resource-grid {
     grid-template-columns: 1fr;
