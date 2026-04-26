@@ -1,0 +1,31 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "배진후"
+  site-url: "https://mint-cocoa.github.io"
+  navbar:
+    left:
+      - text: "개요"
+        href: index.qmd
+      - text: "서버"
+        href: https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html
+      - text: "클라이언트"
+        href: https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html
+      - text: "DevOps"
+        href: https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html
+    right:
+      - icon: github
+        href: https://github.com/mint-cocoa
+        aria-label: GitHub
+
+format:
+  html:
+    lang: ko
+    theme: cosmo
+    css: styles.css
+    toc: false
+    page-layout: article
+    title-block-banner: false
+    link-external-newwindow: true
