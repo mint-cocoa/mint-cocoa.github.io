@@ -44,11 +44,7 @@ a:focus-visible,
 }
 
 .home-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  align-items: center;
-  min-height: 52vh;
+  min-height: auto;
   background:
     linear-gradient(135deg, rgba(37, 99, 235, 0.12), transparent 38%),
     linear-gradient(315deg, rgba(22, 129, 91, 0.14), transparent 42%),
@@ -56,19 +52,23 @@ a:focus-visible,
   border-bottom: 1px solid var(--line);
 }
 
+.home-hero__content {
+  max-width: 860px;
+}
+
 .home-hero h1 {
-  max-width: 780px;
-  margin: 0.45rem 0 0.85rem;
-  font-size: clamp(1.9rem, 3.6vw, 3.55rem);
-  line-height: 1.12;
+  max-width: 680px;
+  margin: 0.35rem 0 0.7rem;
+  font-size: clamp(1.75rem, 3vw, 2.65rem);
+  line-height: 1.18;
   letter-spacing: 0;
 }
 
 .home-hero p {
-  max-width: 700px;
-  margin-bottom: 1.1rem;
+  max-width: 720px;
+  margin-bottom: 0.85rem;
   color: var(--muted);
-  font-size: 1.04rem;
+  font-size: 1rem;
 }
 
 .eyebrow {
@@ -82,16 +82,17 @@ a:focus-visible,
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.7rem;
+  gap: 0.55rem;
+  margin-top: 1rem;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.75rem;
+  min-height: 2.45rem;
   border-radius: 6px;
-  padding: 0.55rem 0.9rem;
+  padding: 0.45rem 0.8rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -113,7 +114,23 @@ a:focus-visible,
   background: rgba(255, 255, 255, 0.72);
 }
 
-.home-hero__panel,
+.hero-meta {
+  color: var(--green);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.hero-route-note {
+  max-width: 780px;
+  margin-top: 0.85rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.hero-route-note code {
+  color: var(--ink);
+}
+
 .pipeline-card {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -121,35 +138,6 @@ a:focus-visible,
   box-shadow: 0 12px 30px rgba(23, 32, 51, 0.08);
 }
 
-.home-hero__panel {
-  padding: 0.85rem;
-}
-
-.signal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
-
-.signal-item {
-  min-height: 5.8rem;
-  padding: 0.75rem;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: #fff;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.signal-item strong {
-  display: block;
-  color: var(--ink);
-  font-size: 1.45rem;
-  line-height: 1.1;
-}
-
-.home-hero__panel pre,
 .pipeline-card pre {
   margin: 0;
   border: 0;
@@ -409,11 +397,6 @@ code {
     width: 100%;
   }
 
-  .signal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .home-hero__panel pre,
   .pipeline-card pre {
     white-space: pre-wrap;
   }
