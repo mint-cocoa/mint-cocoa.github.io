@@ -5,13 +5,10 @@ import {
   ArrowRight,
   BookOpen,
   Boxes,
-  Cpu,
   ExternalLink,
   Github,
   Layers3,
   MonitorPlay,
-  Network,
-  Rocket,
   Server,
   ShieldCheck,
 } from "lucide-react";
@@ -36,13 +33,6 @@ type WorkItem = {
   summary: string;
   metrics: string[];
   tags: string[];
-};
-
-type EvidenceItem = {
-  label: string;
-  value: string;
-  detail: string;
-  icon: Icon;
 };
 
 type RepoItem = {
@@ -91,33 +81,6 @@ const workItems: WorkItem[] = [
       "GitHub Actions, GHCR, GitOps, Argo CD, MetalLB, ingress-nginx를 연결해 C++ 정적 파일 서버를 개인 도메인에 배포했습니다.",
     metrics: ["3 control-plane", "2 workers", "Argo CD synced"],
     tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
-  },
-];
-
-const evidenceItems: EvidenceItem[] = [
-  {
-    label: "Edge",
-    value: "C++ TLS Proxy",
-    detail: "mintcocoa.cc 앞단에서 TLS 종료와 SNI 라우팅 수행",
-    icon: ShieldCheck,
-  },
-  {
-    label: "Runtime",
-    value: "Web · Proxy · Game",
-    detail: "같은 io_uring 코어에서 웹, 프록시, 게임 서버 계층 분리",
-    icon: Cpu,
-  },
-  {
-    label: "Delivery",
-    value: "Actions → GHCR → GitOps",
-    detail: "커밋 SHA 이미지와 Helm values를 자동 연결",
-    icon: Rocket,
-  },
-  {
-    label: "Cluster",
-    value: "5-node Kubernetes",
-    detail: "Proxmox VM 기반 HA control-plane과 worker 구성",
-    icon: Network,
   },
 ];
 
@@ -210,17 +173,6 @@ function App() {
               portfolio.mintcocoa.cc/devops/OpsDashboard.html live path
             </figcaption>
           </figure>
-        </section>
-
-        <section className="evidence-strip" aria-label="핵심 검증 포인트">
-          {evidenceItems.map((item) => (
-            <article key={item.label}>
-              <item.icon size={20} />
-              <p>{item.label}</p>
-              <strong>{item.value}</strong>
-              <span>{item.detail}</span>
-            </article>
-          ))}
         </section>
 
         <section className="section">

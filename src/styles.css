@@ -55,7 +55,6 @@ a:focus-visible {
 .site-header,
 .hero,
 .section,
-.evidence-strip,
 .footer {
   padding-left: max(1.25rem, calc((100vw - 1180px) / 2));
   padding-right: max(1.25rem, calc((100vw - 1180px) / 2));
@@ -271,49 +270,6 @@ figcaption {
   box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.14);
 }
 
-.evidence-strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.85rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: #ffffff;
-}
-
-.evidence-strip article {
-  min-height: 9.2rem;
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: linear-gradient(180deg, #ffffff 0, #f8fafc 100%);
-}
-
-.evidence-strip svg {
-  color: var(--blue);
-}
-
-.evidence-strip p {
-  margin: 0.8rem 0 0.25rem;
-  color: var(--subtle);
-  font-size: 0.78rem;
-  font-weight: 850;
-  text-transform: uppercase;
-}
-
-.evidence-strip strong {
-  display: block;
-  margin-bottom: 0.35rem;
-  font-size: 1rem;
-}
-
-.evidence-strip span {
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
 .section {
   padding-top: clamp(3rem, 6vw, 4.6rem);
   padding-bottom: clamp(3rem, 6vw, 4.6rem);
@@ -525,7 +481,6 @@ figcaption {
     transform: none;
   }
 
-  .evidence-strip,
   .work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -536,7 +491,6 @@ figcaption {
   .site-header,
   .hero,
   .section,
-  .evidence-strip,
   .footer {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -555,7 +509,6 @@ figcaption {
     min-height: 2.95rem;
   }
 
-  .evidence-strip,
   .work-grid,
   .repo-list a {
     grid-template-columns: 1fr;
