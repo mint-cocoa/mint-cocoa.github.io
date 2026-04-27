@@ -1,0 +1,30 @@
+---
+title: "DevOps 문서 라우트"
+subtitle: "홈랩 Kubernetes, GitOps, 운영 대시보드 문서로 이동"
+---
+
+::: {.route-page}
+::: {.route-card .primary}
+### 홈랩 DevOps 포트폴리오
+
+[`mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html`](https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html)
+
+GHCR, GitOps, Argo CD, MetalLB, ingress-nginx를 거쳐 포트폴리오와 웹 앱을 홈랩 Kubernetes에 배포한 기록입니다.
+:::
+
+::: {.route-card}
+### Live Ops Dashboard
+
+[`mint-cocoa.github.io/portfolio/devops/OpsDashboard.html`](https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html)
+
+Prometheus, Kubernetes workload, Proxmox 상태를 읽는 대시보드 문서입니다.
+:::
+
+::: {.route-card .runtime}
+### Runtime Demo
+
+[`portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html`](https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html)
+
+같은 문서를 홈랩 Kubernetes와 C++ `RuntimeWeb` 정적 파일 서버 경로에서 확인합니다.
+:::
+:::

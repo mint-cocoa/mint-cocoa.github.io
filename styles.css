@@ -172,13 +172,16 @@ a:focus-visible,
 
 .guide-grid,
 .proof-grid,
-.resource-grid {
+.resource-grid,
+.route-grid,
+.route-page {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.guide-card {
+.guide-card,
+.route-card {
   position: relative;
   min-height: 100%;
   border: 1px solid var(--line);
@@ -186,6 +189,26 @@ a:focus-visible,
   border-radius: 8px;
   padding: 1.15rem;
   background: var(--paper);
+}
+
+.route-card.primary {
+  border-top-color: var(--blue);
+}
+
+.route-card.runtime {
+  border-top-color: var(--green);
+}
+
+.route-card h3 {
+  margin-top: 0;
+}
+
+.route-card p {
+  color: var(--muted);
+}
+
+.route-page {
+  margin-top: 1.5rem;
 }
 
 .guide-card.client {
@@ -358,6 +381,8 @@ code {
   .runtime-layout,
   .guide-grid,
   .proof-grid,
+  .route-grid,
+  .route-page,
   .maintenance-list,
   .flow-map,
   .resource-grid {

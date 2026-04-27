@@ -1,0 +1,30 @@
+---
+title: "클라이언트 문서 라우트"
+subtitle: "DirectX 11 멀티플레이 던전 RPG 클라이언트 문서로 이동"
+---
+
+::: {.route-page}
+::: {.route-card .primary}
+### 클라이언트 구현 포트폴리오
+
+[`mint-cocoa.github.io/portfolio/client/ClientPortfolio.html`](https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html)
+
+DirectX 11 렌더링, 씬 전환, TCP 패킷 처리, 게임 UI와 서버 주도 멀티플레이 흐름을 정리한 상세 문서입니다.
+:::
+
+::: {.route-card}
+### 문서 인덱스
+
+[`mint-cocoa.github.io/portfolio/`](https://mint-cocoa.github.io/portfolio/)
+
+서버, 클라이언트, DevOps, Ops Dashboard 문서 전체 인덱스로 돌아갑니다.
+:::
+
+::: {.route-card .runtime}
+### Runtime Demo
+
+[`portfolio.mintcocoa.cc/client/ClientPortfolio.html`](https://portfolio.mintcocoa.cc/client/ClientPortfolio.html)
+
+같은 문서를 홈랩 Kubernetes와 C++ `RuntimeWeb` 정적 파일 서버 경로에서 확인합니다.
+:::
+:::

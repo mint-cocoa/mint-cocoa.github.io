@@ -17,14 +17,16 @@ website:
     left:
       - text: "개요"
         href: index.qmd
-      - text: "상세 문서"
+      - text: "문서 인덱스"
         href: https://mint-cocoa.github.io/portfolio/
       - text: "서버"
-        href: https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html
+        href: server.qmd
       - text: "클라이언트"
-        href: https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html
+        href: client.qmd
       - text: "DevOps"
-        href: https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html
+        href: devops.qmd
+      - text: "Runtime Demo"
+        href: runtime.qmd
     right:
       - icon: github
         href: https://github.com/mint-cocoa

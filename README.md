@@ -2,8 +2,10 @@
 
 Quarto로 렌더링되는 포트폴리오 허브입니다.
 
-대표 공개 문서는 GitHub Pages에 두고, `portfolio.mintcocoa.cc`는 직접 만든 C++
-정적 파일 서버와 홈랩 Kubernetes 배포 경로를 검증하는 runtime demo로 분리합니다.
+대표 허브와 짧은 라우팅 페이지는 GitHub Pages 루트에 두고,
+`mint-cocoa.github.io/portfolio/`는 상세 문서 인덱스로 둡니다.
+`portfolio.mintcocoa.cc`는 직접 만든 C++ 정적 파일 서버와 홈랩 Kubernetes 배포
+경로를 검증하는 runtime demo로 분리합니다.
 
 상세 문서는 [`mint-cocoa/portfolio`](https://github.com/mint-cocoa/portfolio)의
 `docs/` 산출물을 참조합니다. 이 허브는 그 문서 인덱스, 서버/클라이언트/DevOps
@@ -15,8 +17,22 @@ Quarto로 렌더링되는 포트폴리오 허브입니다.
 |---|---|
 | `_quarto.yml` | Quarto website 설정, GitHub 링크, 검색, footer, HTML 옵션 |
 | `index.qmd` | 포트폴리오 허브 원본 문서 |
+| `server.qmd` / `client.qmd` / `devops.qmd` | 상세 문서로 보내는 짧은 라우팅 페이지 |
+| `runtime.qmd` | C++ `RuntimeWeb` 운영 데모 안내 라우팅 페이지 |
 | `styles.css` | 랜딩 페이지 레이아웃과 반응형 스타일 |
 | `.github/workflows/pages-deploy.yml` | Quarto 렌더링 후 GitHub Pages 배포 |
+
+## URL 기준
+
+| URL | 역할 |
+|---|---|
+| `https://mint-cocoa.github.io/` | 대표 허브 |
+| `https://mint-cocoa.github.io/server.html` | 서버 문서 라우트 |
+| `https://mint-cocoa.github.io/client.html` | 클라이언트 문서 라우트 |
+| `https://mint-cocoa.github.io/devops.html` | DevOps 문서 라우트 |
+| `https://mint-cocoa.github.io/runtime.html` | Runtime demo 라우트 |
+| `https://mint-cocoa.github.io/portfolio/` | 상세 문서 인덱스 |
+| `https://portfolio.mintcocoa.cc/` | C++ `RuntimeWeb` + 홈랩 Kubernetes 운영 데모 |
 
 ## 개발
 
