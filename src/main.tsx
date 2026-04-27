@@ -2,19 +2,14 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import {
   Activity,
-  ArrowRight,
   BookOpen,
-  Boxes,
   ExternalLink,
   Github,
   Layers3,
   MonitorPlay,
   Server,
-  ShieldCheck,
 } from "lucide-react";
-import argoTreeImage from "./assets/argocd-portfolio-tree.png";
-import clientArchitectureImage from "./assets/client-architecture.png";
-import serverRuntimeImage from "./assets/server-runtime-layers.png";
+import clientThumbnail from "../image.png";
 import "./styles.css";
 
 type Icon = React.ComponentType<{ size?: number; strokeWidth?: number }>;
@@ -27,18 +22,24 @@ type NavItem = {
 type WorkItem = {
   eyebrow: string;
   title: string;
-  href: string;
   icon: Icon;
-  image: string;
+  thumbnail?: string;
   summary: string;
-  metrics: string[];
+  pagesUrl: string;
+  mirrorUrl: string;
+  repoUrl: string;
+  repoName: string;
+  note: string;
   tags: string[];
+  group?: "server-app";
 };
 
-type RepoItem = {
-  name: string;
+type ServingRoot = {
+  label: string;
   href: string;
-  role: string;
+  title: string;
+  detail: string;
+  icon: Icon;
 };
 
 const navItems: NavItem[] = [
@@ -48,66 +49,99 @@ const navItems: NavItem[] = [
   { label: "Ops", href: "https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html" },
 ];
 
-const workItems: WorkItem[] = [
+const servingRoots: ServingRoot[] = [
   {
-    eyebrow: "C++ Server Runtime",
-    title: "io_uring 기반 서버 런타임",
-    href: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html",
-    icon: Server,
-    image: serverRuntimeImage,
-    summary:
-      "공통 Runtime 위에 RuntimeWeb, RuntimeProxy, RuntimeGame을 분리하고 HTTP 앱, TCP reverse proxy, 던전 게임 서버 예제로 검증했습니다.",
-    metrics: ["Multishot Accept/Recv", "Provided Buffer", "24 runtime tests"],
-    tags: ["C++", "Linux", "io_uring", "RuntimeWeb"],
-  },
-  {
-    eyebrow: "DirectX Game Client",
-    title: "멀티플레이 던전 RPG 클라이언트",
-    href: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html",
-    icon: MonitorPlay,
-    image: clientArchitectureImage,
-    summary:
-      "DirectX 11 렌더링, 씬 전환, Protobuf 패킷 프레이밍, WinSock2 네트워크 루프를 직접 구현한 C++ 게임 클라이언트입니다.",
-    metrics: ["29 OBJ assets", "59 protobuf messages", "Scene-driven flow"],
-    tags: ["C++", "DirectX 11", "Protobuf", "WinSock2"],
-  },
-  {
-    eyebrow: "Homelab Platform",
-    title: "GitOps 기반 홈 Kubernetes 운영",
-    href: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
-    icon: Boxes,
-    image: argoTreeImage,
-    summary:
-      "GitHub Actions, GHCR, GitOps, Argo CD, MetalLB, ingress-nginx를 연결해 C++ 정적 파일 서버를 개인 도메인에 배포했습니다.",
-    metrics: ["3 control-plane", "2 workers", "Argo CD synced"],
-    tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
+    label: "GitHub Pages",
+    href: "https://mint-cocoa.github.io/",
+    title: "대표 포트폴리오 허브 + 상세 문서",
+    detail: "허브, 상세 인덱스, 서버, 클라이언트, DevOps, Ops Dashboard 문서를 공개하는 기본 경로",
+    icon: BookOpen,
   },
 ];
 
-const repositories: RepoItem[] = [
+const workItems: WorkItem[] = [
   {
-    name: "iouring-runtime",
-    href: "https://github.com/mint-cocoa/iouring-runtime",
-    role: "Runtime, RuntimeWeb, RuntimeProxy, RuntimeGame, web/proxy/game examples",
+    eyebrow: "Server Core",
+    title: "io_uring 공통 런타임",
+    icon: Server,
+    summary:
+      "Multishot Accept/Recv, Provided Buffer Ring, 세션 수명관리, 멀티스레드 이벤트 루프를 직접 구현한 공통 C++ 서버 런타임입니다.",
+    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-iouring",
+    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-iouring",
+    repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
+    repoName: "iouring-runtime",
+    note: "네트워크 엔진, 세션, 버퍼, worker loop를 다루는 공통 기반",
+    tags: ["C++", "Linux", "io_uring", "Runtime"],
   },
   {
-    name: "portfolio",
-    href: "https://github.com/mint-cocoa/portfolio",
-    role: "Quarto 문서, C++ 정적 파일 서버, GHCR 이미지 배포",
+    eyebrow: "RuntimeWeb",
+    title: "Web 서버 애플리케이션",
+    icon: Server,
+    summary:
+      "HTTP 라우팅, 정적 파일 서빙, sendfile 경로, 운영용 web app 예제를 RuntimeWeb 계층으로 분리했습니다.",
+    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-web-apps",
+    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-web-apps",
+    repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
+    repoName: "iouring-runtime",
+    note: "dropapp, webhook_inbox, speedtest, file_store 같은 Web 앱 실행 단위",
+    tags: ["RuntimeWeb", "HTTP", "Static Files", "SendFile"],
+    group: "server-app",
   },
   {
-    name: "game-client",
-    href: "https://github.com/mint-cocoa/game-client",
-    role: "DirectX 11 멀티플레이 던전 RPG 클라이언트",
+    eyebrow: "RuntimeProxy",
+    title: "Proxy 서버 애플리케이션",
+    icon: Server,
+    summary:
+      "TCP reverse proxy와 TLS/SNI 라우팅을 RuntimeProxy 계층으로 분리해 게이트웨이 성격의 서버를 검증했습니다.",
+    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-proxy-app",
+    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-proxy-app",
+    repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
+    repoName: "iouring-runtime",
+    note: "업스트림 포워딩, TLS 종료, 도메인 기반 라우팅 검증",
+    tags: ["RuntimeProxy", "TCP", "TLS", "SNI"],
+    group: "server-app",
   },
   {
-    name: "home-k8s-gitops",
-    href: "https://github.com/mint-cocoa/home-k8s-gitops",
-    role: "Kubernetes desired state와 Argo CD Application 구성",
+    eyebrow: "RuntimeGame",
+    title: "Game 서버 애플리케이션",
+    icon: Server,
+    summary:
+      "PacketSession, Room, RoomManager 기반 게임 서버 구조와 멀티플레이 던전 서버 예제를 RuntimeGame 위에 분리했습니다.",
+    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-game-app",
+    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-game-app",
+    repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
+    repoName: "iouring-runtime",
+    note: "프로토콜, 네트워크 동기화, Zone 생명주기, 세션 라우팅",
+    tags: ["RuntimeGame", "PacketSession", "Room", "Dungeon"],
+    group: "server-app",
+  },
+  {
+    eyebrow: "Client Document",
+    title: "멀티플레이 던전 RPG 클라이언트",
+    icon: MonitorPlay,
+    thumbnail: clientThumbnail,
+    summary:
+      "C++ DirectX 11 클라이언트의 렌더링, 네트워크, 씬 전환, 게임플레이 구조를 정리한 문서입니다.",
+    pagesUrl: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html",
+    mirrorUrl: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html",
+    repoUrl: "https://github.com/mint-cocoa/game-client",
+    repoName: "game-client",
+    note: "GitHub Pages 문서와 self-hosted mirror를 동일 산출물로 제공",
+    tags: ["C++", "DirectX 11", "Protobuf", "WinSock2"],
   },
 ];
 
 const liveOpsDashboardUrl = "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html";
+const devOpsDocument = {
+  pagesUrl: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
+  mirrorUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
+  repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
+  repoName: "home-k8s-gitops",
+  note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
+  tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
+};
+const serverAppItems = workItems.filter((item) => item.group === "server-app");
+const primaryWorkItems = workItems.filter((item) => item.group !== "server-app");
 
 function App() {
   return (
@@ -150,6 +184,24 @@ function App() {
                 운영 데모 (Live)
               </a>
             </div>
+            <div className="hero-devops" aria-label="DevOps 문서와 운영 mirror 경로">
+              <p className="card-eyebrow">
+                <Activity size={17} />
+                DevOps Document
+              </p>
+              <strong>GitOps 기반 홈 Kubernetes 운영</strong>
+              <span>{devOpsDocument.note}</span>
+              <div className="doc-link-row hero-doc-links">
+                <a href={devOpsDocument.pagesUrl} target="_blank" rel="noreferrer">
+                  GitHub Pages <ExternalLink size={15} />
+                </a>
+              </div>
+              <div className="tag-row">
+                {devOpsDocument.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            </div>
           </div>
 
           <figure className="hero-visual">
@@ -176,13 +228,32 @@ function App() {
         </section>
 
         <section className="section">
-          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="주요 개발 프로젝트" />
+          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="문서와 운영 mirror 경로" />
+          <p className="section-intro">
+            상세 문서는 `mint-cocoa.github.io/portfolio/`에서 안정적으로 공개하고, 같은 산출물을
+            `portfolio.mintcocoa.cc`에서 홈랩 Kubernetes와 C++ static file server로 서빙합니다.
+          </p>
+          <div className="serving-root-grid" aria-label="대표 문서 서빙 경로">
+            {servingRoots.map((root) => (
+              <a href={root.href} key={root.href} target="_blank" rel="noreferrer">
+                <p className="card-eyebrow">
+                  <root.icon size={17} />
+                  {root.label}
+                </p>
+                <strong>{root.href}</strong>
+                <span>{root.title}</span>
+                <small>{root.detail}</small>
+              </a>
+            ))}
+          </div>
           <div className="work-grid">
-            {workItems.map((item) => (
-              <a className="work-card" href={item.href} key={item.title}>
-                <div className="work-card-img">
-                  <img src={item.image} alt="" aria-hidden="true" />
-                </div>
+            {primaryWorkItems.map((item) => (
+              <article className={`work-card${item.thumbnail ? " has-thumbnail" : ""}`} key={item.title}>
+                {item.thumbnail ? (
+                  <div className="work-card-thumbnail">
+                    <img src={item.thumbnail} alt="" aria-hidden="true" />
+                  </div>
+                ) : null}
                 <div className="work-card-body">
                   <p className="card-eyebrow">
                     <item.icon size={17} />
@@ -190,34 +261,50 @@ function App() {
                   </p>
                   <h2>{item.title}</h2>
                   <p>{item.summary}</p>
-                  <ul className="metric-list">
-                    {item.metrics.map((metric) => (
-                      <li key={metric}>{metric}</li>
-                    ))}
-                  </ul>
+                  <p className="route-note">{item.note}</p>
+                  <div className="doc-link-row" aria-label={`${item.title} 문서 경로`}>
+                    <a href={item.pagesUrl} target="_blank" rel="noreferrer">
+                      GitHub Pages <ExternalLink size={15} />
+                    </a>
+                    <a href={item.repoUrl} target="_blank" rel="noreferrer">
+                      GitHub: {item.repoName} <Github size={15} />
+                    </a>
+                  </div>
+                  {item.title === "io_uring 공통 런타임" ? (
+                    <div className="server-app-grid" aria-label="서버 예제 애플리케이션 문서">
+                      {serverAppItems.map((app) => (
+                        <article className="server-app-card" key={app.title}>
+                          <p className="card-eyebrow">
+                            <app.icon size={17} />
+                            {app.eyebrow}
+                          </p>
+                          <h3>{app.title}</h3>
+                          <p>{app.summary}</p>
+                          <p className="route-note">{app.note}</p>
+                          <div className="doc-link-row compact" aria-label={`${app.title} 문서 경로`}>
+                            <a href={app.pagesUrl} target="_blank" rel="noreferrer">
+                              Pages <ExternalLink size={15} />
+                            </a>
+                            <a href={app.repoUrl} target="_blank" rel="noreferrer">
+                              GitHub <Github size={15} />
+                            </a>
+                          </div>
+                          <div className="tag-row">
+                            {app.tags.map((tag) => (
+                              <span key={tag}>{tag}</span>
+                            ))}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  ) : null}
                   <div className="tag-row">
                     {item.tags.map((tag) => (
                       <span key={tag}>{tag}</span>
                     ))}
                   </div>
-                  <span className="card-link">
-                    상세 구현 보기 <ArrowRight size={16} />
-                  </span>
                 </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <section className="section repo-section">
-          <SectionTitle icon={ShieldCheck} eyebrow="Source Repositories" title="코드 및 문서 저장소" />
-          <div className="repo-list">
-            {repositories.map((repo) => (
-              <a href={repo.href} key={repo.name} target="_blank" rel="noreferrer">
-                <strong>{repo.name}</strong>
-                <span>{repo.role}</span>
-                <ExternalLink size={16} />
-              </a>
+              </article>
             ))}
           </div>
         </section>
