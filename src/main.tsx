@@ -14,12 +14,9 @@ import {
   Rocket,
   Server,
   ShieldCheck,
-  TerminalSquare,
 } from "lucide-react";
 import argoTreeImage from "./assets/argocd-portfolio-tree.png";
 import clientArchitectureImage from "./assets/client-architecture.png";
-import k8sPodsImage from "./assets/k9s-portfolio-pods.png";
-import liveBrowserImage from "./assets/portfolio-live-browser.png";
 import serverRuntimeImage from "./assets/server-runtime-layers.png";
 import "./styles.css";
 
@@ -147,37 +144,7 @@ const repositories: RepoItem[] = [
   },
 ];
 
-const deliveryFlow = [
-  "Quarto docs",
-  "C++ static file server",
-  "GHCR image",
-  "GitOps tag update",
-  "Argo CD sync",
-  "ingress-nginx",
-];
-
-const topologySteps = [
-  {
-    label: "Internet",
-    detail: "80/443 port-forward",
-  },
-  {
-    label: "Edge Plane",
-    detail: "Mini PC 172.30.1.27 · C++ tcp_reverse_proxy · TLS/SNI",
-  },
-  {
-    label: "Workload Entry",
-    detail: "MetalLB VIP 172.30.1.240 · ingress-nginx",
-  },
-  {
-    label: "Kubernetes",
-    detail: "3 control-plane + 2 workers on Proxmox VMs",
-  },
-  {
-    label: "Runtime Workloads",
-    detail: "portfolio_site · demo · monitoring · planned web apps",
-  },
-];
+const liveOpsDashboardUrl = "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html";
 
 function App() {
   return (
@@ -223,10 +190,24 @@ function App() {
           </div>
 
           <figure className="hero-visual">
-            <img src={liveBrowserImage} alt="portfolio.mintcocoa.cc 운영 화면" />
+            <div className="hero-embed">
+              <iframe
+                src={liveOpsDashboardUrl}
+                title="portfolio.mintcocoa.cc OpsDashboard live path"
+                loading="lazy"
+                scrolling="no"
+              />
+              <a
+                className="hero-embed-link"
+                href={liveOpsDashboardUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="OpsDashboard 라이브 페이지 열기"
+              />
+            </div>
             <figcaption>
               <span className="status-dot" />
-              portfolio.mintcocoa.cc live path
+              portfolio.mintcocoa.cc/devops/OpsDashboard.html live path
             </figcaption>
           </figure>
         </section>
@@ -240,49 +221,6 @@ function App() {
               <span>{item.detail}</span>
             </article>
           ))}
-        </section>
-
-        <section className="section topology-section">
-          <SectionTitle icon={Network} eyebrow="Homelab Topology" title="C++ 엣지 프록시부터 Kubernetes 워크로드까지" />
-          <div className="topology-grid">
-            <div className="topology-flow" aria-label="홈랩 트래픽 흐름">
-              {topologySteps.map((step, index) => (
-                <article className="topology-node" key={step.label}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{step.label}</strong>
-                  <p>{step.detail}</p>
-                </article>
-              ))}
-            </div>
-            <div className="topology-notes">
-              <article>
-                <p className="card-eyebrow">
-                  <ShieldCheck size={17} />
-                  Edge Plane
-                </p>
-                <h3>mintcocoa.cc 앞단은 C++ TLS 리버스 프록시가 담당합니다.</h3>
-                <p>
-                  `/usr/local/bin/tcp_reverse_proxy`가 443에서 TLS를 종료하고 SNI 기준으로
-                  `whoami`, `tools`, `draw`, `speed`, `files`, `activity` 같은 내부 업스트림을
-                  선택합니다. 80번 포트는 일반 웹 서비스가 아니라 Let&apos;s Encrypt HTTP-01
-                  challenge 응답에 사용됩니다.
-                </p>
-              </article>
-              <article>
-                <p className="card-eyebrow">
-                  <Boxes size={17} />
-                  Workload Plane
-                </p>
-                <h3>클러스터 내부는 MetalLB와 ingress-nginx가 진입점을 나눕니다.</h3>
-                <p>
-                  `portfolio.mintcocoa.cc` 요청은 Edge Proxy에서 MetalLB VIP `172.30.1.240`으로
-                  전달되고, ingress-nginx가 `service/portfolio`를 거쳐 C++ `portfolio_site`
-                  컨테이너로 연결합니다. Proxmox 위 3 control-plane, 2 worker VM이 이 워크로드를
-                  받칩니다.
-                </p>
-              </article>
-            </div>
-          </div>
         </section>
 
         <section className="section">
@@ -317,28 +255,6 @@ function App() {
               </a>
             ))}
           </div>
-        </section>
-
-        <section className="section split-section">
-          <div>
-            <SectionTitle icon={TerminalSquare} eyebrow="Delivery Pipeline" title="문서가 라이브 서비스가 되기까지" />
-            <p className="section-copy">
-              GitHub Pages의 안정적인 문서 서빙을 넘어, 동일한 결과물이 Docker 컨테이너(GHCR)로
-              빌드되어 GitOps를 통해 홈 Kubernetes 클러스터에 배포되는 흐름을 직접 구축했습니다.
-            </p>
-            <ol className="flow-list">
-              {deliveryFlow.map((step, index) => (
-                <li key={step}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-          </div>
-          <figure className="ops-shot">
-            <img src={k8sPodsImage} alt="Kubernetes에서 portfolio pod가 실행 중인 k9s 화면" />
-            <figcaption>portfolio workload running on homelab Kubernetes</figcaption>
-          </figure>
         </section>
 
         <section className="section repo-section">
