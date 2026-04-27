@@ -1,57 +1,49 @@
 # mint-cocoa.github.io
 
-Quarto로 렌더링되는 포트폴리오 허브입니다.
+배진후 포트폴리오의 메인 진입점(Hub) 역할을 하는 React + Vite 기반의 랜딩 페이지입니다.
 
-대표 허브와 짧은 라우팅 페이지는 GitHub Pages 루트에 두고,
-`mint-cocoa.github.io/portfolio/`는 상세 문서 인덱스로 둡니다.
-`portfolio.mintcocoa.cc`는 직접 만든 C++ 정적 파일 서버와 홈랩 Kubernetes 배포
-경로를 검증하는 runtime demo로 분리합니다.
+과거에는 Quarto로 구성되었으나 현재는 순수 React 앱으로 포트폴리오 첫인상과 상세 문서로의 매끄러운 라우팅만을 전담하도록 간소화 및 최적화되었습니다. 실제 상세 기술 문서(C++ 웹 서버, 게임 클라이언트, DevOps 등)는 [mint-cocoa/portfolio](https://github.com/mint-cocoa/portfolio) 리포지토리 안에서 관리되며 `mint-cocoa.github.io/portfolio/` 하위 경로에 서빙됩니다.
 
-상세 문서는 [`mint-cocoa/portfolio`](https://github.com/mint-cocoa/portfolio)의
-`docs/` 산출물을 참조합니다. 이 허브는 그 문서 인덱스, 서버/클라이언트/DevOps
-문서, self-hosted runtime demo를 한 화면에서 연결합니다.
+## 주요 링크
 
-## 구조
+- **대표 허브 (현재 레포):** [https://mint-cocoa.github.io/](https://mint-cocoa.github.io/)
+- **상세 문서 인덱스:** [https://mint-cocoa.github.io/portfolio/](https://mint-cocoa.github.io/portfolio/)
+- **Runtime Demo:** [https://portfolio.mintcocoa.cc/](https://portfolio.mintcocoa.cc/) (본인이 직접 개발한 C++ `RuntimeWeb` 서버가 홈랩 Kubernetes 위에서 문서를 라이브로 서빙하는 실제 운영 데모)
 
-| 경로 | 역할 |
-|---|---|
-| `_quarto.yml` | Quarto website 설정, GitHub 링크, 검색, footer, HTML 옵션 |
-| `index.qmd` | 포트폴리오 허브 원본 문서 |
-| `server.qmd` / `client.qmd` / `devops.qmd` | 상세 문서로 보내는 짧은 라우팅 페이지 |
-| `runtime.qmd` | C++ `RuntimeWeb` 운영 데모 안내 라우팅 페이지 |
-| `styles.css` | 랜딩 페이지 레이아웃과 반응형 스타일 |
-| `.github/workflows/pages-deploy.yml` | Quarto 렌더링 후 GitHub Pages 배포 |
+## 프로젝트 구조
 
-## URL 기준
-
-| URL | 역할 |
-|---|---|
-| `https://mint-cocoa.github.io/` | 대표 허브 |
-| `https://mint-cocoa.github.io/server.html` | 서버 문서 라우트 |
-| `https://mint-cocoa.github.io/client.html` | 클라이언트 문서 라우트 |
-| `https://mint-cocoa.github.io/devops.html` | DevOps 문서 라우트 |
-| `https://mint-cocoa.github.io/runtime.html` | Runtime demo 라우트 |
-| `https://mint-cocoa.github.io/portfolio/` | 상세 문서 인덱스 |
-| `https://portfolio.mintcocoa.cc/` | C++ `RuntimeWeb` + 홈랩 Kubernetes 운영 데모 |
-
-## 개발
-
-```bash
-quarto check
-quarto preview
+```text
+├── src/
+│   ├── main.tsx          # 메인 랜딩 페이지 UI 컴포넌트
+│   ├── styles.css        # CSS 모듈 (루트 레벨에서 이동하여 정리됨)
+│   └── assets/           # 포트폴리오 썸네일 이미지 및 리소스
+├── index.html            # Vite 진입점 문서 (최상단으로 정리됨)
+├── vite.config.ts        # Vite 빌드 설정 (_site 출력)
+├── package.json          # Node 의존성 (React, Lucide Icon 등)
+└── .github/workflows/    # GitHub Pages 자동 배포 파이프라인
 ```
 
-정적 결과물을 확인하려면 다음 명령을 사용합니다.
+## 로컬 개발 및 빌드
+
+빠르게 띄워볼 수 있도록 단순화하였습니다.
 
 ```bash
-quarto render
+# 의존성 설치
+npm ci
+
+# 로컬 개발 서버 접속
+npm run dev
+
+# 프로덕션 빌드 및 로컬 프리뷰
+npm run build
+npm run preview -- --port 4173
 ```
 
-## 배포
+## GitHub Actions 배포 (CI/CD)
 
-`main` 브랜치에 push하면 GitHub Actions가 Quarto를 설치하고 `_site/`로 렌더링한
-뒤 GitHub Pages에 배포합니다.
+`main` 브랜치에 코드가 푸시되면 `.github/workflows/pages-deploy.yml` 워크플로우를 통해 자동으로 빌드 및 배포됩니다.
 
-Quarto 프로젝트는 `execute.freeze: auto`를 사용합니다. 현재 문서는 실행 코드가
-없지만, 이후 Python/R/Julia 계산 셀이 추가되어도 변경된 원본 기준으로 결과를
-관리할 수 있습니다.
+1. **Setup Node**: Node.js 22버전 환경 구성
+2. **Install**: `npm ci` 의존성 설치
+3. **Build**: `npm run build` 스크립트를 통해 `_site/` 디렉터리에 정적 파일 번들링
+4. **Deploy**: 빌드된 아티팩트를 GitHub Pages로 릴리즈

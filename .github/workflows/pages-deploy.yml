@@ -22,9 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -33,9 +30,6 @@ jobs:
 
       - name: Install React dependencies
         run: npm ci
-
-      - name: Render site
-        run: quarto render
 
       - name: Build React hub
         run: npm run build

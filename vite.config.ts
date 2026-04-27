@@ -6,10 +6,7 @@ export default defineConfig({
   base: "/",
   build: {
     outDir: "_site",
-    emptyOutDir: false,
+    emptyOutDir: true,
     sourcemap: true,
-    rollupOptions: {
-      input: "react-index.html",
-    },
   },
 });
