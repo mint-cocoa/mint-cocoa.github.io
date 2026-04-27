@@ -62,19 +62,6 @@ const clientThumbnailUrl = "https://img.youtube.com/vi/pnr0sobe3ug/maxresdefault
 
 const workItems: WorkItem[] = [
   {
-    eyebrow: "Portfolio Overview",
-    title: "C++ 서버 런타임과 홈랩 운영 포트폴리오",
-    icon: Layers3,
-    summary:
-      "io_uring 기반 C++ 런타임으로 정적 웹 서버, TLS 리버스 프록시, 게임 서버 계층을 만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/",
-    repoUrl: "https://github.com/mint-cocoa/mint-cocoa.github.io",
-    repoName: "mint-cocoa.github.io",
-    note: "portfolio.mintcocoa.cc는 C++ 서버 이미지가 GitOps로 배포되어 실제 클러스터에서 서빙되는 라이브 경로입니다.",
-    tags: ["C++", "DirectX", "Kubernetes", "GitOps"],
-  },
-  {
     eyebrow: "Server Core",
     title: "io_uring 공통 런타임",
     icon: Server,
@@ -130,19 +117,6 @@ const workItems: WorkItem[] = [
     group: "server-app",
   },
   {
-    eyebrow: "DevOps Document",
-    title: "GitOps 기반 홈 Kubernetes 운영",
-    icon: Activity,
-    summary:
-      "GHCR, GitOps, Argo CD, Kubernetes로 C++ 정적 파일 서버를 배포한 운영 문서입니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
-    repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
-    repoName: "home-k8s-gitops",
-    note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
-    tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
-  },
-  {
     eyebrow: "Client Document",
     title: "멀티플레이 던전 RPG 클라이언트",
     icon: MonitorPlay,
@@ -159,6 +133,14 @@ const workItems: WorkItem[] = [
 ];
 
 const liveOpsDashboardUrl = "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html";
+const devOpsDocument = {
+  pagesUrl: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
+  mirrorUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
+  repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
+  repoName: "home-k8s-gitops",
+  note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
+  tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
+};
 const serverAppItems = workItems.filter((item) => item.group === "server-app");
 const primaryWorkItems = workItems.filter((item) => item.group !== "server-app");
 
@@ -184,6 +166,45 @@ function App() {
 
       <main>
         <section className="hero">
+          <div className="hero-copy">
+            <p className="eyebrow">C++ Server · DirectX Client · K8s DevOps</p>
+            <h1>C++ 서버 런타임과 홈랩 운영 포트폴리오</h1>
+            <p className="lead">
+              io_uring 기반 C++ 런타임으로 정적 웹 서버, TLS 리버스 프록시, 게임 서버 계층을
+              만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.
+              `portfolio.mintcocoa.cc`는 C++ 서버 이미지가 GitOps로 배포되어 실제 클러스터에서
+              서빙되는 라이브 경로입니다.
+            </p>
+            <div className="hero-actions" aria-label="주요 링크">
+              <a className="button primary" href="https://mint-cocoa.github.io/portfolio/">
+                <BookOpen size={18} />
+                포트폴리오 상세 문서
+              </a>
+              <a className="button" href="https://portfolio.mintcocoa.cc/" target="_blank" rel="noreferrer">
+                <Activity size={18} />
+                운영 데모 (Live)
+              </a>
+            </div>
+            <div className="hero-devops" aria-label="DevOps 문서와 운영 mirror 경로">
+              <p className="card-eyebrow">
+                <Activity size={17} />
+                DevOps Document
+              </p>
+              <strong>GitOps 기반 홈 Kubernetes 운영</strong>
+              <span>{devOpsDocument.note}</span>
+              <div className="doc-link-row hero-doc-links">
+                <a href={devOpsDocument.pagesUrl} target="_blank" rel="noreferrer">
+                  GitHub Pages <ExternalLink size={15} />
+                </a>
+              </div>
+              <div className="tag-row">
+                {devOpsDocument.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <figure className="hero-visual">
             <div className="hero-embed">
               <iframe
