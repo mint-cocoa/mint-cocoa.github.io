@@ -22,6 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout portfolio documents
+        uses: actions/checkout@v4
+        with:
+          repository: mint-cocoa/portfolio
+          ref: master
+          path: _repos/docs/portfolio
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -31,7 +38,7 @@ jobs:
       - name: Install React dependencies
         run: npm ci
 
-      - name: Build React hub
+      - name: Build React hub and attach portfolio docs
         run: npm run build
 
       - name: Upload Pages artifact
