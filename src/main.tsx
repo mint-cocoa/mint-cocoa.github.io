@@ -24,8 +24,7 @@ type WorkItem = {
   icon: Icon;
   thumbnail?: string;
   summary: string;
-  pagesUrl: string;
-  mirrorUrl: string;
+  detailUrl: string;
   repoUrl: string;
   repoName: string;
   note: string;
@@ -42,19 +41,26 @@ type ServingRoot = {
 };
 
 const navItems: NavItem[] = [
-  { label: "Server", href: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html" },
-  { label: "Client", href: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html" },
-  { label: "DevOps", href: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html" },
-  { label: "Ops", href: "https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html" },
+  { label: "Server", href: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html" },
+  { label: "Client", href: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html" },
+  { label: "DevOps", href: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html" },
+  { label: "Ops", href: "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html" },
 ];
 
 const servingRoots: ServingRoot[] = [
   {
     label: "GitHub Pages",
     href: "https://mint-cocoa.github.io/",
-    title: "대표 포트폴리오 허브 + 상세 문서",
-    detail: "허브, 상세 인덱스, 서버, 클라이언트, DevOps, Ops Dashboard 문서를 공개하는 기본 경로",
+    title: "대표 포트폴리오 허브",
+    detail: "첫 화면, 프로젝트 요약, 상세 포트폴리오와 GitHub 저장소로 가는 진입점",
     icon: BookOpen,
+  },
+  {
+    label: "RuntimeWeb",
+    href: "https://portfolio.mintcocoa.cc/",
+    title: "상세 포트폴리오 canonical",
+    detail: "mint-cocoa/portfolio 레포가 소유한 상세 문서와 홈랩 Kubernetes 운영 데모",
+    icon: Activity,
   },
 ];
 
@@ -67,8 +73,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "Multishot Accept/Recv, Provided Buffer Ring, 세션 수명관리, 멀티스레드 이벤트 루프를 직접 구현한 공통 C++ 서버 런타임입니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-iouring",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-iouring",
+    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-iouring",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "네트워크 엔진, 세션, 버퍼, worker loop를 다루는 공통 기반",
@@ -80,8 +85,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "HTTP 라우팅, 정적 파일 서빙, sendfile 경로, 운영용 web app 예제를 RuntimeWeb 계층으로 분리했습니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-web-apps",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-web-apps",
+    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-web-apps",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "dropapp, webhook_inbox, speedtest, file_store 같은 Web 앱 실행 단위",
@@ -94,8 +98,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "TCP reverse proxy와 TLS/SNI 라우팅을 RuntimeProxy 계층으로 분리해 게이트웨이 성격의 서버를 검증했습니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-proxy-app",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-proxy-app",
+    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-proxy-app",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "업스트림 포워딩, TLS 종료, 도메인 기반 라우팅 검증",
@@ -108,8 +111,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "PacketSession, Room, RoomManager 기반 게임 서버 구조와 멀티플레이 던전 서버 예제를 RuntimeGame 위에 분리했습니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-game-app",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-game-app",
+    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-game-app",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "프로토콜, 네트워크 동기화, Zone 생명주기, 세션 라우팅",
@@ -123,19 +125,17 @@ const workItems: WorkItem[] = [
     thumbnail: clientThumbnailUrl,
     summary:
       "C++ DirectX 11 클라이언트의 렌더링, 네트워크, 씬 전환, 게임플레이 구조를 정리한 문서입니다.",
-    pagesUrl: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html",
-    mirrorUrl: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html",
+    detailUrl: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html",
     repoUrl: "https://github.com/mint-cocoa/game-client",
     repoName: "game-client",
-    note: "GitHub Pages 문서와 self-hosted mirror를 동일 산출물로 제공",
+    note: "상세 문서와 운영 데모는 portfolio 레포와 RuntimeWeb 경로에서 관리",
     tags: ["C++", "DirectX 11", "Protobuf", "WinSock2"],
   },
 ];
 
 const liveOpsDashboardUrl = "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html";
 const devOpsDocument = {
-  pagesUrl: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
-  mirrorUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
+  detailUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
   repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
   repoName: "home-k8s-gitops",
   note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
@@ -176,16 +176,16 @@ function App() {
               서빙되는 라이브 경로입니다.
             </p>
             <div className="hero-actions" aria-label="주요 링크">
-              <a className="button primary" href="https://mint-cocoa.github.io/portfolio/">
+              <a className="button primary" href="https://portfolio.mintcocoa.cc/">
                 <BookOpen size={18} />
-                포트폴리오 상세 문서
+                상세 포트폴리오
               </a>
               <a className="button" href="https://portfolio.mintcocoa.cc/" target="_blank" rel="noreferrer">
                 <Activity size={18} />
                 운영 데모 (Live)
               </a>
             </div>
-            <div className="hero-devops" aria-label="DevOps 문서와 운영 mirror 경로">
+            <div className="hero-devops" aria-label="DevOps 문서와 운영 경로">
               <p className="card-eyebrow">
                 <Activity size={17} />
                 DevOps Document
@@ -193,8 +193,8 @@ function App() {
               <strong>GitOps 기반 홈 Kubernetes 운영</strong>
               <span>{devOpsDocument.note}</span>
               <div className="doc-link-row hero-doc-links">
-                <a href={devOpsDocument.pagesUrl} target="_blank" rel="noreferrer">
-                  GitHub Pages <ExternalLink size={15} />
+                <a href={devOpsDocument.detailUrl} target="_blank" rel="noreferrer">
+                  RuntimeWeb <ExternalLink size={15} />
                 </a>
               </div>
               <div className="tag-row">
@@ -229,10 +229,10 @@ function App() {
         </section>
 
         <section className="section">
-          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="문서와 운영 mirror 경로" />
+          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="허브와 상세 포트폴리오 경로" />
           <p className="section-intro">
-            상세 문서는 `mint-cocoa.github.io/portfolio/`에서 안정적으로 공개하고, 같은 산출물을
-            `portfolio.mintcocoa.cc`에서 홈랩 Kubernetes와 C++ static file server로 서빙합니다.
+            이 페이지는 대표 허브만 담당합니다. 상세 문서와 운영 화면은 `portfolio.mintcocoa.cc`에서
+            홈랩 Kubernetes와 C++ static file server로 서빙합니다.
           </p>
           <div className="serving-root-grid" aria-label="대표 문서 서빙 경로">
             {servingRoots.map((root) => (
@@ -264,8 +264,8 @@ function App() {
                   <p>{item.summary}</p>
                   <p className="route-note">{item.note}</p>
                   <div className="doc-link-row" aria-label={`${item.title} 문서 경로`}>
-                    <a href={item.pagesUrl} target="_blank" rel="noreferrer">
-                      GitHub Pages <ExternalLink size={15} />
+                    <a href={item.detailUrl} target="_blank" rel="noreferrer">
+                      상세 문서 <ExternalLink size={15} />
                     </a>
                     <a href={item.repoUrl} target="_blank" rel="noreferrer">
                       GitHub: {item.repoName} <Github size={15} />
@@ -283,8 +283,8 @@ function App() {
                           <p>{app.summary}</p>
                           <p className="route-note">{app.note}</p>
                           <div className="doc-link-row compact" aria-label={`${app.title} 문서 경로`}>
-                            <a href={app.pagesUrl} target="_blank" rel="noreferrer">
-                              Pages <ExternalLink size={15} />
+                            <a href={app.detailUrl} target="_blank" rel="noreferrer">
+                              Docs <ExternalLink size={15} />
                             </a>
                             <a href={app.repoUrl} target="_blank" rel="noreferrer">
                               GitHub <Github size={15} />
