@@ -8,9 +8,7 @@
   },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build:hub": "vite build",
-    "sync:portfolio": "bash scripts/sync-portfolio-docs.sh",
-    "build": "npm run build:hub && npm run sync:portfolio",
+    "build": "vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
