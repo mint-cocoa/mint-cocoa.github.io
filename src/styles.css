@@ -12,6 +12,7 @@
   --gold: #a16207;
   --dark: #101828;
   --shadow: 0 20px 50px rgba(24, 32, 51, 0.12);
+  --hero-panel-height: clamp(27rem, 36vw, 35rem);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -76,8 +77,7 @@ a:focus-visible {
 
 .brand,
 .icon-link,
-.site-header nav a,
-.button {
+.site-header nav a {
   display: inline-flex;
   align-items: center;
 }
@@ -127,7 +127,7 @@ a:focus-visible {
   display: grid;
   grid-template-columns: minmax(0, 0.6fr) minmax(520px, 1.05fr);
   gap: clamp(1.75rem, 4vw, 3rem);
-  align-items: start;
+  align-items: stretch;
   padding-left: max(1.25rem, calc((100vw - 1400px) / 2));
   padding-right: max(1.25rem, calc((100vw - 1400px) / 2));
   padding-top: clamp(3rem, 6vw, 5rem);
@@ -135,7 +135,11 @@ a:focus-visible {
 }
 
 .hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   max-width: 660px;
+  min-height: var(--hero-panel-height);
 }
 
 .eyebrow,
@@ -167,43 +171,17 @@ h1 {
 
 .lead {
   max-width: 660px;
-  margin-bottom: 1.35rem;
+  margin-bottom: 0;
   color: var(--muted);
   font-size: 1.02rem;
   line-height: 1.78;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  max-width: 660px;
-}
-
-.button {
-  justify-content: center;
-  gap: 0.48rem;
-  min-height: 2.8rem;
-  padding: 0.58rem 0.95rem;
-  border: 1px solid #aeb8c9;
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.82);
-  color: var(--ink);
-  font-weight: 850;
-  box-shadow: 0 1px 0 rgba(24, 32, 51, 0.04);
-}
-
-.button.primary {
-  border-color: var(--blue);
-  background: var(--blue);
-  color: #ffffff;
 }
 
 .hero-devops {
   display: grid;
   gap: 0.55rem;
   max-width: 660px;
-  margin-top: 1rem;
+  margin-top: 1.35rem;
   padding: 0.9rem;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -226,9 +204,12 @@ h1 {
 }
 
 .hero-visual {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   width: 100%;
-  margin: clamp(4.6rem, 7.4vw, 6.4rem) 0 0;
+  min-height: var(--hero-panel-height);
+  margin: 0;
   border: 1px solid rgba(220, 226, 236, 0.92);
   border-radius: 8px;
   background: var(--paper);
@@ -236,9 +217,9 @@ h1 {
 }
 
 .hero-embed {
+  flex: 1;
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
   background: #ffffff;
 }
 
@@ -509,8 +490,18 @@ figcaption {
     grid-template-columns: 1fr;
   }
 
+  .hero-copy,
   .hero-visual {
-    transform: none;
+    min-height: auto;
+  }
+
+  .hero-copy {
+    justify-content: flex-start;
+  }
+
+  .hero-embed {
+    flex: none;
+    aspect-ratio: 16 / 9;
   }
 
   .server-app-grid {
@@ -534,15 +525,6 @@ figcaption {
 
   .hero {
     padding-top: 2.4rem;
-  }
-
-  .hero-actions,
-  .button {
-    width: 100%;
-  }
-
-  .button {
-    min-height: 2.95rem;
   }
 
   .work-grid,

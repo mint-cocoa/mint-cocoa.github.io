@@ -148,12 +148,6 @@ function App() {
               만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.
               문서는 mint-cocoa.github.io/portfolio/를 기준 경로로 공개합니다.
             </p>
-            <div className="hero-actions" aria-label="주요 링크">
-              <a className="button primary" href={liveOpsDashboardUrl} target="_blank" rel="noreferrer">
-                <Activity size={18} />
-                운영 대시보드
-              </a>
-            </div>
             <div className="hero-devops" aria-label="DevOps 문서와 운영 경로">
               <p className="card-eyebrow">
                 <Activity size={17} />
