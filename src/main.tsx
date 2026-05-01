@@ -2,7 +2,6 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import {
   Activity,
-  BookOpen,
   ExternalLink,
   Github,
   Layers3,
@@ -32,36 +31,11 @@ type WorkItem = {
   group?: "server-app";
 };
 
-type ServingRoot = {
-  label: string;
-  href: string;
-  title: string;
-  detail: string;
-  icon: Icon;
-};
-
 const navItems: NavItem[] = [
   { label: "Server", href: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html" },
   { label: "Client", href: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html" },
   { label: "DevOps", href: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html" },
   { label: "Ops", href: "https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html" },
-];
-
-const servingRoots: ServingRoot[] = [
-  {
-    label: "GitHub Pages",
-    href: "https://mint-cocoa.github.io/",
-    title: "대표 포트폴리오 허브",
-    detail: "첫 화면, 프로젝트 요약, 상세 포트폴리오와 GitHub 저장소로 가는 진입점",
-    icon: BookOpen,
-  },
-  {
-    label: "Portfolio Docs",
-    href: "https://mint-cocoa.github.io/portfolio/",
-    title: "상세 포트폴리오 canonical",
-    detail: "portfolio 레포의 서버, 클라이언트, DevOps, Ops Dashboard 산출물을 공개하는 기준 경로",
-    icon: BookOpen,
-  },
 ];
 
 const clientThumbnailUrl = "https://img.youtube.com/vi/pnr0sobe3ug/maxresdefault.jpg";
@@ -152,7 +126,7 @@ function App() {
           <span>JH</span>
           배진후
         </a>
-        <nav aria-label="상세 포트폴리오">
+        <nav aria-label="문서 탐색">
           {navItems.map((item) => (
             <a href={item.href} key={item.label}>
               {item.label}
@@ -172,16 +146,12 @@ function App() {
             <p className="lead">
               io_uring 기반 C++ 런타임으로 정적 웹 서버, TLS 리버스 프록시, 게임 서버 계층을
               만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.
-              상세 포트폴리오 문서는 `mint-cocoa.github.io/portfolio/`를 기준 경로로 공개합니다.
+              문서는 mint-cocoa.github.io/portfolio/를 기준 경로로 공개합니다.
             </p>
             <div className="hero-actions" aria-label="주요 링크">
-              <a className="button primary" href="https://mint-cocoa.github.io/portfolio/">
-                <BookOpen size={18} />
-                상세 포트폴리오
-              </a>
-              <a className="button" href={liveOpsDashboardUrl} target="_blank" rel="noreferrer">
+              <a className="button primary" href={liveOpsDashboardUrl} target="_blank" rel="noreferrer">
                 <Activity size={18} />
-                Ops Dashboard
+                운영 대시보드
               </a>
             </div>
             <div className="hero-devops" aria-label="DevOps 문서와 운영 경로">
@@ -228,24 +198,7 @@ function App() {
         </section>
 
         <section className="section">
-          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="허브와 상세 포트폴리오 경로" />
-          <p className="section-intro">
-            이 페이지는 대표 허브만 담당합니다. 상세 문서와 운영 화면은 `mint-cocoa.github.io/portfolio/`
-            하위 경로에서 확인할 수 있습니다.
-          </p>
-          <div className="serving-root-grid" aria-label="대표 문서 서빙 경로">
-            {servingRoots.map((root) => (
-              <a href={root.href} key={root.href} target="_blank" rel="noreferrer">
-                <p className="card-eyebrow">
-                  <root.icon size={17} />
-                  {root.label}
-                </p>
-                <strong>{root.href}</strong>
-                <span>{root.title}</span>
-                <small>{root.detail}</small>
-              </a>
-            ))}
-          </div>
+          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="주요 프로젝트" />
           <div className="work-grid">
             {primaryWorkItems.map((item) => (
               <article className={`work-card${item.thumbnail ? " has-thumbnail" : ""}`} key={item.title}>
