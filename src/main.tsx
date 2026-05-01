@@ -41,10 +41,10 @@ type ServingRoot = {
 };
 
 const navItems: NavItem[] = [
-  { label: "Server", href: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html" },
-  { label: "Client", href: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html" },
-  { label: "DevOps", href: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html" },
-  { label: "Ops", href: "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html" },
+  { label: "Server", href: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html" },
+  { label: "Client", href: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html" },
+  { label: "DevOps", href: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html" },
+  { label: "Ops", href: "https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html" },
 ];
 
 const servingRoots: ServingRoot[] = [
@@ -56,11 +56,11 @@ const servingRoots: ServingRoot[] = [
     icon: BookOpen,
   },
   {
-    label: "RuntimeWeb",
-    href: "https://portfolio.mintcocoa.cc/",
+    label: "Portfolio Docs",
+    href: "https://mint-cocoa.github.io/portfolio/",
     title: "상세 포트폴리오 canonical",
-    detail: "mint-cocoa/portfolio 레포가 소유한 상세 문서와 홈랩 Kubernetes 운영 데모",
-    icon: Activity,
+    detail: "portfolio 레포의 서버, 클라이언트, DevOps, Ops Dashboard 산출물을 공개하는 기준 경로",
+    icon: BookOpen,
   },
 ];
 
@@ -73,7 +73,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "Multishot Accept/Recv, Provided Buffer Ring, 세션 수명관리, 멀티스레드 이벤트 루프를 직접 구현한 공통 C++ 서버 런타임입니다.",
-    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-iouring",
+    detailUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-iouring",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "네트워크 엔진, 세션, 버퍼, worker loop를 다루는 공통 기반",
@@ -85,7 +85,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "HTTP 라우팅, 정적 파일 서빙, sendfile 경로, 운영용 web app 예제를 RuntimeWeb 계층으로 분리했습니다.",
-    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-web-apps",
+    detailUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-web-apps",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "dropapp, webhook_inbox, speedtest, file_store 같은 Web 앱 실행 단위",
@@ -98,7 +98,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "TCP reverse proxy와 TLS/SNI 라우팅을 RuntimeProxy 계층으로 분리해 게이트웨이 성격의 서버를 검증했습니다.",
-    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-proxy-app",
+    detailUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-proxy-app",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "업스트림 포워딩, TLS 종료, 도메인 기반 라우팅 검증",
@@ -111,7 +111,7 @@ const workItems: WorkItem[] = [
     icon: Server,
     summary:
       "PacketSession, Room, RoomManager 기반 게임 서버 구조와 멀티플레이 던전 서버 예제를 RuntimeGame 위에 분리했습니다.",
-    detailUrl: "https://portfolio.mintcocoa.cc/server/ServerCorePortfolio.html#sec-game-app",
+    detailUrl: "https://mint-cocoa.github.io/portfolio/server/ServerCorePortfolio.html#sec-game-app",
     repoUrl: "https://github.com/mint-cocoa/iouring-runtime",
     repoName: "iouring-runtime",
     note: "프로토콜, 네트워크 동기화, Zone 생명주기, 세션 라우팅",
@@ -125,17 +125,17 @@ const workItems: WorkItem[] = [
     thumbnail: clientThumbnailUrl,
     summary:
       "C++ DirectX 11 클라이언트의 렌더링, 네트워크, 씬 전환, 게임플레이 구조를 정리한 문서입니다.",
-    detailUrl: "https://portfolio.mintcocoa.cc/client/ClientPortfolio.html",
+    detailUrl: "https://mint-cocoa.github.io/portfolio/client/ClientPortfolio.html",
     repoUrl: "https://github.com/mint-cocoa/game-client",
     repoName: "game-client",
-    note: "상세 문서와 운영 데모는 portfolio 레포와 RuntimeWeb 경로에서 관리",
+    note: "상세 문서는 mint-cocoa.github.io/portfolio 하위 경로를 기준으로 제공합니다.",
     tags: ["C++", "DirectX 11", "Protobuf", "WinSock2"],
   },
 ];
 
-const liveOpsDashboardUrl = "https://portfolio.mintcocoa.cc/devops/OpsDashboard.html";
+const liveOpsDashboardUrl = "https://mint-cocoa.github.io/portfolio/devops/OpsDashboard.html";
 const devOpsDocument = {
-  detailUrl: "https://portfolio.mintcocoa.cc/devops/DevOpsPortfolio.html",
+  detailUrl: "https://mint-cocoa.github.io/portfolio/devops/DevOpsPortfolio.html",
   repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
   repoName: "home-k8s-gitops",
   note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
@@ -172,17 +172,16 @@ function App() {
             <p className="lead">
               io_uring 기반 C++ 런타임으로 정적 웹 서버, TLS 리버스 프록시, 게임 서버 계층을
               만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.
-              `portfolio.mintcocoa.cc`는 C++ 서버 이미지가 GitOps로 배포되어 실제 클러스터에서
-              서빙되는 라이브 경로입니다.
+              상세 포트폴리오 문서는 `mint-cocoa.github.io/portfolio/`를 기준 경로로 공개합니다.
             </p>
             <div className="hero-actions" aria-label="주요 링크">
-              <a className="button primary" href="https://portfolio.mintcocoa.cc/">
+              <a className="button primary" href="https://mint-cocoa.github.io/portfolio/">
                 <BookOpen size={18} />
                 상세 포트폴리오
               </a>
-              <a className="button" href="https://portfolio.mintcocoa.cc/" target="_blank" rel="noreferrer">
+              <a className="button" href={liveOpsDashboardUrl} target="_blank" rel="noreferrer">
                 <Activity size={18} />
-                운영 데모 (Live)
+                Ops Dashboard
               </a>
             </div>
             <div className="hero-devops" aria-label="DevOps 문서와 운영 경로">
@@ -194,7 +193,7 @@ function App() {
               <span>{devOpsDocument.note}</span>
               <div className="doc-link-row hero-doc-links">
                 <a href={devOpsDocument.detailUrl} target="_blank" rel="noreferrer">
-                  RuntimeWeb <ExternalLink size={15} />
+                  GitHub Pages <ExternalLink size={15} />
                 </a>
               </div>
               <div className="tag-row">
@@ -209,7 +208,7 @@ function App() {
             <div className="hero-embed">
               <iframe
                 src={liveOpsDashboardUrl}
-                title="portfolio.mintcocoa.cc OpsDashboard live path"
+                title="mint-cocoa.github.io portfolio OpsDashboard"
                 loading="lazy"
                 scrolling="no"
               />
@@ -223,7 +222,7 @@ function App() {
             </div>
             <figcaption>
               <span className="status-dot" />
-              portfolio.mintcocoa.cc/devops/OpsDashboard.html live path
+              mint-cocoa.github.io/portfolio/devops/OpsDashboard.html
             </figcaption>
           </figure>
         </section>
@@ -231,8 +230,8 @@ function App() {
         <section className="section">
           <SectionTitle icon={Layers3} eyebrow="Core Projects" title="허브와 상세 포트폴리오 경로" />
           <p className="section-intro">
-            이 페이지는 대표 허브만 담당합니다. 상세 문서와 운영 화면은 `portfolio.mintcocoa.cc`에서
-            홈랩 Kubernetes와 C++ static file server로 서빙합니다.
+            이 페이지는 대표 허브만 담당합니다. 상세 문서와 운영 화면은 `mint-cocoa.github.io/portfolio/`
+            하위 경로에서 확인할 수 있습니다.
           </p>
           <div className="serving-root-grid" aria-label="대표 문서 서빙 경로">
             {servingRoots.map((root) => (

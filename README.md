@@ -2,12 +2,13 @@
 
 배진후 포트폴리오의 메인 진입점(Hub) 역할만 담당하는 React + Vite 기반 랜딩 페이지입니다.
 
-이 저장소는 상세 문서를 빌드하거나 복사하지 않습니다. 실제 상세 기술 문서(C++ 웹 서버, 게임 클라이언트, DevOps 등)는 [mint-cocoa/portfolio](https://github.com/mint-cocoa/portfolio) 리포지토리에서 관리하며, 운영 데모의 canonical 경로는 `portfolio.mintcocoa.cc`입니다.
+이 저장소는 대표 허브만 빌드합니다. 실제 상세 기술 문서(C++ 웹 서버, 게임 클라이언트, DevOps 등)는 [mint-cocoa/portfolio](https://github.com/mint-cocoa/portfolio) 리포지토리에서 관리하며, 공개 canonical 경로는 `https://mint-cocoa.github.io/portfolio/`입니다.
 
 ## 주요 링크
 
 - **대표 허브 (현재 레포):** [https://mint-cocoa.github.io/](https://mint-cocoa.github.io/)
-- **상세 포트폴리오 / 운영 데모:** [https://portfolio.mintcocoa.cc/](https://portfolio.mintcocoa.cc/)
+- **상세 포트폴리오:** [https://mint-cocoa.github.io/portfolio/](https://mint-cocoa.github.io/portfolio/)
+- **사용 종료 안내 경로:** [https://portfolio.mintcocoa.cc/](https://portfolio.mintcocoa.cc/)
 - **상세 문서 소스:** [mint-cocoa/portfolio](https://github.com/mint-cocoa/portfolio)
 
 ## 프로젝트 구조
@@ -27,7 +28,7 @@
 └── vite.config.ts        # Vite 빌드 설정, 출력 경로는 _site/
 ```
 
-역할을 분리하기 위해 이 저장소에는 `portfolio` 레포의 `docs/` 산출물을 포함하지 않습니다. 상세 문서의 생성, 컨테이너 이미지, Ops API, Kubernetes 배포 파일은 `mint-cocoa/portfolio`에서 관리합니다.
+역할을 분리하기 위해 이 저장소에는 `portfolio` 레포의 `docs/` 산출물을 포함하지 않습니다. 상세 문서의 생성, Pages 배포, 컨테이너 이미지, Ops API, Kubernetes 배포 파일은 `mint-cocoa/portfolio`에서 관리합니다. `portfolio.mintcocoa.cc`는 과거 RuntimeWeb 운영 데모 경로였으며, 현재는 상세 문서 대신 사용 종료 안내 페이지만 유지합니다.
 
 ## 로컬 개발 및 빌드
 
