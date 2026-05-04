@@ -12,7 +12,6 @@
   --gold: #a16207;
   --dark: #101828;
   --shadow: 0 20px 50px rgba(24, 32, 51, 0.12);
-  --hero-panel-height: clamp(27rem, 36vw, 35rem);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -53,93 +52,10 @@ a:focus-visible {
   min-height: 100vh;
 }
 
-.site-header,
-.hero,
 .section,
 .footer {
   padding-left: max(1.25rem, calc((100vw - 1180px) / 2));
   padding-right: max(1.25rem, calc((100vw - 1180px) / 2));
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 1rem;
-  min-height: 4.25rem;
-  border-bottom: 1px solid rgba(220, 226, 236, 0.78);
-  background: rgba(255, 255, 255, 0.84);
-  backdrop-filter: blur(18px);
-}
-
-.brand,
-.icon-link,
-.site-header nav a {
-  display: inline-flex;
-  align-items: center;
-}
-
-.brand {
-  gap: 0.62rem;
-  font-size: 1rem;
-  font-weight: 850;
-}
-
-.brand span {
-  display: inline-grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 7px;
-  background: var(--dark);
-  color: #ffffff;
-  font-size: 0.82rem;
-  letter-spacing: 0;
-}
-
-.site-header nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.25rem;
-}
-
-.site-header nav a,
-.icon-link {
-  min-height: 2.25rem;
-  padding: 0.4rem 0.7rem;
-  border-radius: 7px;
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 750;
-}
-
-.site-header nav a:hover,
-.icon-link:hover {
-  color: var(--ink);
-  background: var(--wash);
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 0.6fr) minmax(520px, 1.05fr);
-  gap: clamp(1.75rem, 4vw, 3rem);
-  align-items: stretch;
-  padding-left: max(1.25rem, calc((100vw - 1400px) / 2));
-  padding-right: max(1.25rem, calc((100vw - 1400px) / 2));
-  padding-top: clamp(3rem, 6vw, 5rem);
-  padding-bottom: clamp(2.75rem, 5.5vw, 4.75rem);
-}
-
-.hero-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 660px;
-  min-height: var(--hero-panel-height);
 }
 
 .eyebrow,
@@ -162,101 +78,11 @@ figure {
 }
 
 h1 {
-  max-width: 660px;
+  max-width: 760px;
   margin-bottom: 1.05rem;
   font-size: clamp(1.95rem, 3.45vw, 3rem);
   line-height: 1.1;
   letter-spacing: 0;
-}
-
-.lead {
-  max-width: 660px;
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 1.02rem;
-  line-height: 1.78;
-}
-
-.hero-devops {
-  display: grid;
-  gap: 0.55rem;
-  max-width: 660px;
-  margin-top: 1.35rem;
-  padding: 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: 0 10px 26px rgba(24, 32, 51, 0.05);
-}
-
-.hero-devops strong {
-  font-size: 1rem;
-}
-
-.hero-devops > span {
-  color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.55;
-}
-
-.hero-doc-links {
-  margin: 0.1rem 0 0;
-}
-
-.hero-visual {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  width: 100%;
-  min-height: var(--hero-panel-height);
-  margin: 0;
-  border: 1px solid rgba(220, 226, 236, 0.92);
-  border-radius: 8px;
-  background: var(--paper);
-  box-shadow: var(--shadow);
-}
-
-.hero-embed {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  background: #ffffff;
-}
-
-.hero-visual img {
-  width: 100%;
-}
-
-.hero-visual img {
-  aspect-ratio: 16 / 9;
-}
-
-.hero-visual iframe {
-  position: absolute;
-  display: block;
-  width: 200%;
-  height: 200%;
-  border: 0;
-  background: #ffffff;
-  transform: scale(0.5);
-  transform-origin: top left;
-  overflow: hidden;
-}
-
-.hero-embed-link {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.hero-embed-link:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.45);
-  outline-offset: -5px;
-}
-
-.hero-visual img {
-  object-fit: cover;
-  object-position: top left;
 }
 
 figcaption {
@@ -280,8 +106,12 @@ figcaption {
 }
 
 .section {
-  padding-top: clamp(3rem, 6vw, 4.6rem);
+  padding-top: clamp(2.25rem, 5vw, 3.6rem);
   padding-bottom: clamp(3rem, 6vw, 4.6rem);
+}
+
+.projects-section {
+  padding-top: clamp(2rem, 4vw, 3rem);
 }
 
 .section-title {
@@ -296,11 +126,67 @@ figcaption {
   gap: 0.44rem;
 }
 
+.section-title h1,
 .section-title h2 {
   margin: 0.35rem 0 0;
   font-size: clamp(1.6rem, 3vw, 2.35rem);
   line-height: 1.14;
   letter-spacing: 0;
+}
+
+.project-title {
+  margin-bottom: 0.8rem;
+}
+
+.project-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.25rem;
+  margin-bottom: 1.4rem;
+}
+
+.section-lead {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.78;
+}
+
+.project-intro-facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  max-width: 30rem;
+}
+
+.project-intro-facts span,
+.project-intro-facts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  min-height: 2.1rem;
+  padding: 0.35rem 0.62rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.project-intro-facts a {
+  border-color: #b8c4d7;
+  color: var(--ink);
+}
+
+.project-intro-facts a:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: #eff6ff;
 }
 
 .work-grid {
@@ -476,32 +362,13 @@ figcaption {
 }
 
 @media (max-width: 980px) {
-  .site-header {
-    grid-template-columns: 1fr auto;
-  }
-
-  .site-header nav {
-    grid-column: 1 / -1;
-    justify-content: flex-start;
-    padding-bottom: 0.65rem;
-  }
-
-  .hero {
+  .project-intro {
     grid-template-columns: 1fr;
   }
 
-  .hero-copy,
-  .hero-visual {
-    min-height: auto;
-  }
-
-  .hero-copy {
+  .project-intro-facts {
     justify-content: flex-start;
-  }
-
-  .hero-embed {
-    flex: none;
-    aspect-ratio: 16 / 9;
+    max-width: none;
   }
 
   .server-app-grid {
@@ -515,16 +382,10 @@ figcaption {
 }
 
 @media (max-width: 640px) {
-  .site-header,
-  .hero,
   .section,
   .footer {
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  .hero {
-    padding-top: 2.4rem;
   }
 
   .work-grid,
@@ -555,8 +416,10 @@ figcaption {
     grid-template-columns: 1fr;
   }
 
-  .hero-doc-links {
-    grid-template-columns: 1fr;
+  .project-intro-facts,
+  .project-intro-facts a {
+    width: 100%;
+    justify-content: center;
   }
 
   .footer {

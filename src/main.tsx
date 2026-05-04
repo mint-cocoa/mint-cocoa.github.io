@@ -12,11 +12,6 @@ import "./styles.css";
 
 type Icon = React.ComponentType<{ size?: number; strokeWidth?: number }>;
 
-type NavItem = {
-  label: string;
-  href: string;
-};
-
 type WorkItem = {
   eyebrow: string;
   title: string;
@@ -24,21 +19,20 @@ type WorkItem = {
   thumbnail?: string;
   summary: string;
   detailUrl: string;
-  repoUrl: string;
-  repoName: string;
+  repoUrl?: string;
+  repoName?: string;
   note: string;
   tags: string[];
+  extraLinks?: {
+    label: string;
+    href: string;
+    icon: Icon;
+  }[];
   group?: "server-app";
 };
 
-const navItems: NavItem[] = [
-  { label: "Server", href: "/portfolio/server/ServerCorePortfolio.html" },
-  { label: "Client", href: "/portfolio/client/ClientPortfolio.html" },
-  { label: "DevOps", href: "/portfolio/devops/DevOpsPortfolio.html" },
-  { label: "Ops", href: "/portfolio/devops/OpsDashboard.html" },
-];
-
 const clientThumbnailUrl = "https://img.youtube.com/vi/pnr0sobe3ug/maxresdefault.jpg";
+const liveOpsDashboardUrl = "/portfolio/devops/OpsDashboard.html";
 
 const workItems: WorkItem[] = [
   {
@@ -93,6 +87,23 @@ const workItems: WorkItem[] = [
     group: "server-app",
   },
   {
+    eyebrow: "DevOps / Live Ops",
+    title: "홈랩 DevOps 운영과 Ops Dashboard",
+    icon: Activity,
+    summary:
+      "C++ 웹 런타임으로 만든 앱을 GitOps, Argo CD, Kubernetes로 배포하고 Ops API 기반 라이브 대시보드까지 연결했습니다.",
+    detailUrl: "/portfolio/devops/DevOpsPortfolio.html",
+    note: "홈랩 계층, 배포 흐름, workload, ingress, observability와 실시간 운영 상태 확인 경로를 함께 제공합니다.",
+    tags: ["Kubernetes", "Argo CD", "Ops API", "Prometheus", "Proxmox"],
+    extraLinks: [
+      {
+        label: "Ops Dashboard",
+        href: liveOpsDashboardUrl,
+        icon: Activity,
+      },
+    ],
+  },
+  {
     eyebrow: "Client Document",
     title: "멀티플레이 던전 RPG 클라이언트",
     icon: MonitorPlay,
@@ -107,92 +118,35 @@ const workItems: WorkItem[] = [
   },
 ];
 
-const liveOpsDashboardUrl = "/portfolio/devops/OpsDashboard.html";
-const devOpsDocument = {
-  detailUrl: "/portfolio/devops/DevOpsPortfolio.html",
-  repoUrl: "https://github.com/mint-cocoa/home-k8s-gitops",
-  repoName: "home-k8s-gitops",
-  note: "홈랩 계층, 배포 흐름, workload, ingress, observability 설명",
-  tags: ["Kubernetes", "GHCR", "Argo CD", "MetalLB"],
-};
 const serverAppItems = workItems.filter((item) => item.group === "server-app");
 const primaryWorkItems = workItems.filter((item) => item.group !== "server-app");
 
 function App() {
   return (
     <div className="app-shell">
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="배진후 포트폴리오 홈">
-          <span>JH</span>
-          배진후
-        </a>
-        <nav aria-label="문서 탐색">
-          {navItems.map((item) => (
-            <a href={item.href} key={item.label}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <a className="icon-link" href="https://github.com/mint-cocoa" target="_blank" rel="noreferrer" aria-label="GitHub">
-          <Github size={19} />
-        </a>
-      </header>
-
       <main>
-        <section className="hero">
-          <div className="hero-copy">
-            <p className="eyebrow">C++ Server · DirectX Client · K8s DevOps</p>
-            <h1>C++ 서버 런타임과 홈랩 운영 포트폴리오</h1>
-            <p className="lead">
+        <section className="section projects-section">
+          <div className="section-title project-title">
+            <p>
+              <Layers3 size={17} />
+              Core Projects
+            </p>
+            <h1>주요 프로젝트</h1>
+          </div>
+          <div className="project-intro">
+            <p className="section-lead">
               io_uring 기반 C++ 런타임으로 정적 웹 서버, TLS 리버스 프록시, 게임 서버 계층을
               만들고, DirectX 클라이언트와 홈랩 Kubernetes 운영까지 하나의 흐름으로 연결했습니다.
-              문서는 현재 호스트의 /portfolio/ 하위 경로로 공개합니다.
             </p>
-            <div className="hero-devops" aria-label="DevOps 문서와 운영 경로">
-              <p className="card-eyebrow">
-                <Activity size={17} />
-                DevOps Document
-              </p>
-              <strong>GitOps 기반 홈 Kubernetes 운영</strong>
-              <span>{devOpsDocument.note}</span>
-              <div className="doc-link-row hero-doc-links">
-                <a href={devOpsDocument.detailUrl} target="_blank" rel="noreferrer">
-                  GitHub Pages <ExternalLink size={15} />
-                </a>
-              </div>
-              <div className="tag-row">
-                {devOpsDocument.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
+            <div className="project-intro-facts" aria-label="문서 공개 경로">
+              <span>C++ Server</span>
+              <span>DirectX Client</span>
+              <span>K8s DevOps</span>
+              <a href="/portfolio/" target="_blank" rel="noreferrer">
+                /portfolio/ 문서 <ExternalLink size={15} />
+              </a>
             </div>
           </div>
-
-          <figure className="hero-visual">
-            <div className="hero-embed">
-              <iframe
-                src={liveOpsDashboardUrl}
-                title="mint-cocoa.github.io portfolio OpsDashboard"
-                loading="lazy"
-                scrolling="no"
-              />
-              <a
-                className="hero-embed-link"
-                href={liveOpsDashboardUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="OpsDashboard 라이브 페이지 열기"
-              />
-            </div>
-            <figcaption>
-              <span className="status-dot" />
-              /portfolio/devops/OpsDashboard.html
-            </figcaption>
-          </figure>
-        </section>
-
-        <section className="section">
-          <SectionTitle icon={Layers3} eyebrow="Core Projects" title="주요 프로젝트" />
           <div className="work-grid">
             {primaryWorkItems.map((item) => (
               <article className={`work-card${item.thumbnail ? " has-thumbnail" : ""}`} key={item.title}>
@@ -213,9 +167,16 @@ function App() {
                     <a href={item.detailUrl} target="_blank" rel="noreferrer">
                       상세 문서 <ExternalLink size={15} />
                     </a>
-                    <a href={item.repoUrl} target="_blank" rel="noreferrer">
-                      GitHub: {item.repoName} <Github size={15} />
-                    </a>
+                    {item.repoUrl && item.repoName ? (
+                      <a href={item.repoUrl} target="_blank" rel="noreferrer">
+                        GitHub: {item.repoName} <Github size={15} />
+                      </a>
+                    ) : null}
+                    {item.extraLinks?.map((link) => (
+                      <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>
+                        {link.label} <link.icon size={15} />
+                      </a>
+                    ))}
                   </div>
                   {item.title === "io_uring 공통 런타임" ? (
                     <div className="server-app-grid" aria-label="서버 예제 애플리케이션 문서">
@@ -263,18 +224,6 @@ function App() {
           mint-cocoa.github.io
         </a>
       </footer>
-    </div>
-  );
-}
-
-function SectionTitle({ icon: IconComponent, eyebrow, title }: { icon: Icon; eyebrow: string; title: string }) {
-  return (
-    <div className="section-title">
-      <p>
-        <IconComponent size={17} />
-        {eyebrow}
-      </p>
-      <h2>{title}</h2>
     </div>
   );
 }
