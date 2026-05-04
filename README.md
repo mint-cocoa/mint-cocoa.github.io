@@ -8,7 +8,8 @@
 
 - **대표 허브 (현재 레포):** [https://mint-cocoa.github.io/](https://mint-cocoa.github.io/)
 - **상세 포트폴리오:** [https://mint-cocoa.github.io/portfolio/](https://mint-cocoa.github.io/portfolio/)
-- **사용 종료 안내 경로:** [https://portfolio.mintcocoa.cc/](https://portfolio.mintcocoa.cc/)
+- **홈랩 미러:** [https://portfolio.mintcocoa.cc/](https://portfolio.mintcocoa.cc/)
+- **홈랩 상세 문서 미러:** [https://portfolio.mintcocoa.cc/portfolio/](https://portfolio.mintcocoa.cc/portfolio/)
 - **상세 문서 소스:** [mint-cocoa/portfolio](https://github.com/mint-cocoa/portfolio)
 
 ## 프로젝트 구조
@@ -28,7 +29,7 @@
 └── vite.config.ts        # Vite 빌드 설정, 출력 경로는 _site/
 ```
 
-역할을 분리하기 위해 이 저장소에는 `portfolio` 레포의 `docs/` 산출물을 포함하지 않습니다. 상세 문서의 생성, Pages 배포, 컨테이너 이미지, Ops API, Kubernetes 배포 파일은 `mint-cocoa/portfolio`에서 관리합니다. `portfolio.mintcocoa.cc`는 과거 RuntimeWeb 운영 데모 경로였으며, 현재는 상세 문서 대신 사용 종료 안내 페이지만 유지합니다.
+역할을 분리하기 위해 이 저장소에는 `portfolio` 레포의 `docs/` 산출물을 포함하지 않습니다. 상세 문서의 생성, Pages 배포, 컨테이너 이미지, Ops API, Kubernetes 배포 파일은 `mint-cocoa/portfolio`에서 관리합니다. `portfolio.mintcocoa.cc`는 이 허브를 C++ RuntimeWeb 컨테이너로 서빙하는 홈랩 미러이며, 상세 문서는 같은 호스트의 `/portfolio/` 아래에서 제공합니다.
 
 ## 로컬 개발 및 빌드
 
