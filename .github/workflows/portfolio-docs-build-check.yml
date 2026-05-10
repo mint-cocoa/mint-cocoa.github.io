@@ -40,6 +40,9 @@ jobs:
           test -f _site/index.html
           test -f _site/portfolio/index.html
           test -f _site/portfolio/server/ServerCorePortfolio.html
+          test -f _site/portfolio/server/RuntimeWebPortfolio.html
+          test -f _site/portfolio/server/RuntimeProxyPortfolio.html
+          test -f _site/portfolio/server/RuntimeGamePortfolio.html
           test -f _site/portfolio/client/ClientPortfolio.html
           test -f _site/portfolio/devops/DevOpsPortfolio.html
           test -f _site/portfolio/devops/OpsDashboard.html
