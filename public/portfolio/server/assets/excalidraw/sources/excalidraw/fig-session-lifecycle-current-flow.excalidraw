@@ -1,0 +1,604 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "excalidraw-cli",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 90,
+      "y": 70,
+      "width": 10,
+      "height": 10,
+      "text": "Session lifecycle: owner bar와 drain bar가 끝나는 지점이 다르다",
+      "fontSize": 28,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "arrow",
+      "id": "timeline",
+      "x": 120,
+      "y": 210,
+      "width": 920,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          920,
+          0
+        ]
+      ],
+      "endArrowhead": null,
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "t1",
+      "x": 110,
+      "y": 160,
+      "width": 10,
+      "height": 10,
+      "text": "accept",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "text",
+      "id": "t2",
+      "x": 330,
+      "y": 160,
+      "width": 10,
+      "height": 10,
+      "text": "submit",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "text",
+      "id": "t3",
+      "x": 560,
+      "y": 160,
+      "width": 10,
+      "height": 10,
+      "text": "CQE",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "text",
+      "id": "t4",
+      "x": 780,
+      "y": 160,
+      "width": 10,
+      "height": 10,
+      "text": "disconnect",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "text",
+      "id": "t5",
+      "x": 990,
+      "y": 160,
+      "width": 10,
+      "height": 10,
+      "text": "release",
+      "fontSize": 18,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "manager_bar",
+      "x": 200,
+      "y": 270,
+      "width": 780,
+      "height": 54,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "manager_bar_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "manager_bar_label",
+      "x": 210,
+      "y": 280,
+      "width": 760,
+      "height": 34,
+      "text": "SessionManager connected owner",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "manager_bar",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "ioevent_bar",
+      "x": 335,
+      "y": 370,
+      "width": 380,
+      "height": 54,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "ioevent_bar_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "ioevent_bar_label",
+      "x": 345,
+      "y": 380,
+      "width": 360,
+      "height": 34,
+      "text": "IoEvent.owner_ptr_: submitted I/O callback 생존",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "ioevent_bar",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "pending_bar",
+      "x": 335,
+      "y": 470,
+      "width": 560,
+      "height": 54,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "pending_bar_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "pending_bar_label",
+      "x": 345,
+      "y": 480,
+      "width": 540,
+      "height": 34,
+      "text": "pending_io_: final CQE까지 release 보류",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "pending_bar",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_outer",
+      "x": 210,
+      "y": 590,
+      "width": 760,
+      "height": 62,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_outer_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_outer_label",
+      "x": 220,
+      "y": 600,
+      "width": 740,
+      "height": 42,
+      "text": "",
+      "fontSize": 17,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_outer",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_0",
+      "x": 210,
+      "y": 590,
+      "width": 190,
+      "height": 62,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_0_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_0_label",
+      "x": 220,
+      "y": 600,
+      "width": 170,
+      "height": 42,
+      "text": "kOpen",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_0",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_1",
+      "x": 400,
+      "y": 590,
+      "width": 190,
+      "height": 62,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_1_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_1_label",
+      "x": 410,
+      "y": 600,
+      "width": 170,
+      "height": 42,
+      "text": "kClosing",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_1",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_2",
+      "x": 590,
+      "y": 590,
+      "width": 190,
+      "height": 62,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_2_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_2_label",
+      "x": 600,
+      "y": 600,
+      "width": 170,
+      "height": 42,
+      "text": "kDraining",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_2",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_3",
+      "x": 780,
+      "y": 590,
+      "width": 190,
+      "height": 62,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_3_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_3_label",
+      "x": 790,
+      "y": 600,
+      "width": 170,
+      "height": 42,
+      "text": "kClosed",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_3",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "add",
+      "x": 120,
+      "y": 210,
+      "width": 80,
+      "height": 60,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          60
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "add_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "add_label",
+      "x": 130,
+      "y": 220,
+      "width": 60,
+      "height": 40,
+      "text": "Add",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "add"
+    },
+    {
+      "type": "arrow",
+      "id": "submit",
+      "x": 335,
+      "y": 210,
+      "width": 0,
+      "height": 160,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          160
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "submit_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "x": 345,
+      "y": 220,
+      "width": 80,
+      "height": 140,
+      "text": "SQE submit",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "submit"
+    },
+    {
+      "type": "arrow",
+      "id": "cqe",
+      "x": 560,
+      "y": 210,
+      "width": 0,
+      "height": 160,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          160
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "cqe_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "cqe_label",
+      "x": 570,
+      "y": 220,
+      "width": 80,
+      "height": 140,
+      "text": "CQE dispatch",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "cqe"
+    },
+    {
+      "type": "arrow",
+      "id": "disc",
+      "x": 780,
+      "y": 210,
+      "width": -95,
+      "height": 380,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -95,
+          380
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "disc_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "disc_label",
+      "x": 790,
+      "y": 220,
+      "width": -115,
+      "height": 360,
+      "text": "새 작업 차단",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "disc"
+    },
+    {
+      "type": "arrow",
+      "id": "rel",
+      "x": 895,
+      "y": 497,
+      "width": 85,
+      "height": -173,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          85,
+          -173
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "rel_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "rel_label",
+      "x": 905,
+      "y": 507,
+      "width": 65,
+      "height": -193,
+      "text": "pending 0",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "rel"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 120,
+      "y": 700,
+      "width": 10,
+      "height": 10,
+      "text": "connected owner는 연결 목록의 생존을, IoEvent owner는 callback 생존을, pending_io_는 release 시점을 각각 맡는다.",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  },
+  "files": {}
+}

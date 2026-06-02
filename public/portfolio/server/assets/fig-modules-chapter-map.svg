@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40 40 1000 750" role="img">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1e1e1e"/></marker></defs>
+<rect x="40" y="40" width="1000" height="750" fill="#ffffff"/>
+<text x="120" y="85.5" text-anchor="start" font-family="Arial, sans-serif" font-size="28" fill="#1e1e1e"><tspan x="120" dy="0">같은 Core를 세 모듈이 다르게 해석한다</tspan></text>
+<rect x="350" y="165" width="300" height="110" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<text x="500" y="203.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1e1e1e"><tspan x="500" dy="0">Core Runtime</tspan><tspan x="500" dy="23">bytes / lifecycle / buffer</tspan><tspan x="500" dy="23">owner ring / send queue</tspan></text>
+<rect x="85" y="410" width="230" height="90" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<text x="200" y="438.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1e1e1e"><tspan x="200" dy="0">RuntimeWeb</tspan><tspan x="200" dy="23">bytes -&gt; HTTP request</tspan><tspan x="200" dy="23">route -&gt; response</tspan></text>
+<rect x="385" y="505" width="230" height="90" rx="12" fill="#c3fae8" stroke="#1e1e1e" stroke-width="2"/>
+<text x="500" y="533.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1e1e1e"><tspan x="500" dy="0">RuntimeProxy</tspan><tspan x="500" dy="23">bytes -&gt; upstream/downstream</tspan><tspan x="500" dy="23">relay</tspan></text>
+<rect x="690" y="410" width="230" height="90" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<text x="805" y="438.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1e1e1e"><tspan x="805" dy="0">RuntimeGame</tspan><tspan x="805" dy="23">bytes -&gt; packet</tspan><tspan x="805" dy="23">Room job</tspan></text>
+<line x1="400" y1="275" x2="210" y2="410" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow)"/>
+<text x="305" y="266.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155"><tspan x="305" dy="0">HttpSession</tspan></text>
+<line x1="500" y1="275" x2="500" y2="505" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow)"/>
+<text x="560" y="266.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155"><tspan x="560" dy="0">bridge</tspan></text>
+<line x1="600" y1="275" x2="805" y2="410" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow)"/>
+<text x="702.5" y="266.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#334155"><tspan x="702.5" dy="0">PacketSession</tspan></text>
+<rect x="240" y="655" width="520" height="65" rx="12" fill="#eebefa" stroke="#1e1e1e" stroke-width="2"/>
+<text x="500" y="694" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#1e1e1e"><tspan x="500" dy="0">검증 관점: 모듈이 늘어나도 Core 경계가 흔들리지 않는가</tspan></text>
+<line x1="500" y1="595" x2="500" y2="655" stroke="#1e1e1e" stroke-width="2.2" marker-end="url(#arrow)"/>
+</svg>

@@ -1,0 +1,104 @@
+{
+  "excalidraw": [
+    {
+      "id": "fig-overview-runtime-boundary",
+      "caption": "io_uring 경계와 Core 런타임, 선택 모듈의 책임 분리",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-overview-runtime-boundary.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-overview-runtime-boundary.svg"
+      },
+      "svg": "assets/excalidraw/fig-overview-runtime-boundary.svg",
+      "original": "diagrams/1.project-overview/fig-overview-runtime-boundary.excalidraw"
+    },
+    {
+      "id": "fig-runtime-core-module-map",
+      "caption": "Core 런타임을 구성하는 반복 전송 책임 지도",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-runtime-core-module-map.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-runtime-core-module-map.svg"
+      },
+      "svg": "assets/excalidraw/fig-runtime-core-module-map.svg",
+      "original": "diagrams/2.runtime-design-execution/fig-runtime-core-module-map.excalidraw"
+    },
+    {
+      "id": "fig-sessionstate-close-gate-current",
+      "caption": "SessionState가 종료 중 새 작업을 차단하는 흐름",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-sessionstate-close-gate-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-sessionstate-close-gate-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-sessionstate-close-gate-current.svg",
+      "original": "diagrams/3.lifecycle-management/fig-sessionstate-close-gate-current.excalidraw"
+    },
+    {
+      "id": "fig-session-lifecycle-current-flow",
+      "caption": "정상 연결과 종료 시점의 owner, pending_io_, release 흐름",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-session-lifecycle-current-flow.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-session-lifecycle-current-flow.svg"
+      },
+      "svg": "assets/excalidraw/fig-session-lifecycle-current-flow.svg",
+      "original": "diagrams/3.lifecycle-management/fig-session-lifecycle-current-flow.excalidraw"
+    },
+    {
+      "id": "fig-partial-send-byte-range-current",
+      "caption": "부분 송신에서 CQE 바이트 수가 가리키는 스트림 앞부분",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-partial-send-byte-range-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-partial-send-byte-range-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-partial-send-byte-range-current.svg",
+      "original": "diagrams/4.buffer-management/fig-partial-send-byte-range-current.excalidraw"
+    },
+    {
+      "id": "fig-sendqueue-active-sendop-current",
+      "caption": "SendQueue와 활성 SendOp으로 구성한 세션별 송신 직렬화",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-sendqueue-active-sendop-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-sendqueue-active-sendop-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-sendqueue-active-sendop-current.svg",
+      "original": "diagrams/4.buffer-management/fig-sendqueue-active-sendop-current.excalidraw"
+    },
+    {
+      "id": "fig-parallel-send-sqe-failure-current",
+      "caption": "동시 send SQE 제출이 메시지 순서를 깨는 실패 경로",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-parallel-send-sqe-failure-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-parallel-send-sqe-failure-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-parallel-send-sqe-failure-current.svg",
+      "original": "diagrams/4.buffer-management/fig-parallel-send-sqe-failure-current.excalidraw"
+    },
+    {
+      "id": "fig-room-output-order-failure-current",
+      "caption": "RunOnRing 즉시/비동기 분기가 Room 출력 순서를 뒤집는 경로",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-room-output-order-failure-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-room-output-order-failure-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-room-output-order-failure-current.svg",
+      "original": "diagrams/5.concurrency-management/fig-room-output-order-failure-current.excalidraw"
+    },
+    {
+      "id": "fig-worker-outbox-ordering-current",
+      "caption": "WorkerOutbox를 통한 세션별 Room 출력 FIFO",
+      "sources": {
+        "excalidraw": "assets/excalidraw/sources/excalidraw/fig-worker-outbox-ordering-current.excalidraw",
+        "mermaid": null,
+        "svg": "assets/excalidraw/sources/svg/fig-worker-outbox-ordering-current.svg"
+      },
+      "svg": "assets/excalidraw/fig-worker-outbox-ordering-current.svg",
+      "original": "diagrams/5.concurrency-management/fig-worker-outbox-ordering-current.excalidraw"
+    }
+  ],
+  "mermaid": []
+}

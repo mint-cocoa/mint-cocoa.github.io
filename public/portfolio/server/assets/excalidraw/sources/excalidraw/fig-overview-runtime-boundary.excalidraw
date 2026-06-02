@@ -1,0 +1,596 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "excalidraw-cli",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 85,
+      "y": 70,
+      "width": 10,
+      "height": 10,
+      "text": "ServerCore: kernel I/O 경계와 protocol module 경계를 분리한다",
+      "fontSize": 27,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "arrow",
+      "id": "boundary",
+      "x": 90,
+      "y": 355,
+      "width": 980,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          980,
+          0
+        ]
+      ],
+      "endArrowhead": null,
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "user_label",
+      "x": 935,
+      "y": 300,
+      "width": 10,
+      "height": 10,
+      "text": "user space",
+      "fontSize": 22,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "text",
+      "id": "kernel_label",
+      "x": 935,
+      "y": 385,
+      "width": 10,
+      "height": 10,
+      "text": "kernel",
+      "fontSize": 22,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "ellipse",
+      "id": "sq_outer",
+      "x": 135,
+      "y": 165,
+      "width": 210,
+      "height": 210,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "sq_outer_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "sq_outer_label",
+      "x": 145,
+      "y": 175,
+      "width": 190,
+      "height": 190,
+      "text": "SQ",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "sq_outer",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "ellipse",
+      "id": "sq_inner",
+      "x": 185,
+      "y": 215,
+      "width": 110,
+      "height": 110,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "sq_inner_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "sq_inner_label",
+      "x": 195,
+      "y": 225,
+      "width": 90,
+      "height": 90,
+      "text": "",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "sq_inner",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "sq_note",
+      "x": 116,
+      "y": 405,
+      "width": 10,
+      "height": 10,
+      "text": "Core가 SQE 제출",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    },
+    {
+      "type": "ellipse",
+      "id": "cq_outer",
+      "x": 455,
+      "y": 165,
+      "width": 210,
+      "height": 210,
+      "backgroundColor": "#ffd8a8",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "cq_outer_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "cq_outer_label",
+      "x": 465,
+      "y": 175,
+      "width": 190,
+      "height": 190,
+      "text": "CQ",
+      "fontSize": 28,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "cq_outer",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "ellipse",
+      "id": "cq_inner",
+      "x": 505,
+      "y": 215,
+      "width": 110,
+      "height": 110,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "cq_inner_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "cq_inner_label",
+      "x": 515,
+      "y": 225,
+      "width": 90,
+      "height": 90,
+      "text": "",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "cq_inner",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "cq_note",
+      "x": 438,
+      "y": 405,
+      "width": 10,
+      "height": 10,
+      "text": "CQE dispatch",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    },
+    {
+      "type": "arrow",
+      "id": "submit",
+      "x": 340,
+      "y": 270,
+      "width": 115,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          115,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "submit_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "x": 350,
+      "y": 280,
+      "width": 95,
+      "height": 40,
+      "text": "SQE",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "submit"
+    },
+    {
+      "type": "arrow",
+      "id": "complete",
+      "x": 560,
+      "y": 375,
+      "width": -100,
+      "height": 110,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -100,
+          110
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "complete_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "complete_label",
+      "x": 570,
+      "y": 385,
+      "width": -120,
+      "height": 90,
+      "text": "CQE",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "complete"
+    },
+    {
+      "type": "rectangle",
+      "id": "syscall",
+      "x": 325,
+      "y": 520,
+      "width": 300,
+      "height": 62,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "syscall_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "syscall_label",
+      "x": 335,
+      "y": 530,
+      "width": 280,
+      "height": 42,
+      "text": "io_uring enter / completion drain",
+      "fontSize": 19,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "syscall",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "sq_to_sys",
+      "x": 240,
+      "y": 375,
+      "width": 165,
+      "height": 145,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          165,
+          145
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "sq_to_sys_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "sq_to_sys_label",
+      "x": 250,
+      "y": 385,
+      "width": 145,
+      "height": 125,
+      "text": "kernel consumes",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "sq_to_sys"
+    },
+    {
+      "type": "arrow",
+      "id": "kernel_to_cq",
+      "x": 625,
+      "y": 552,
+      "width": -20,
+      "height": -180,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -20,
+          -180
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "kernel_to_cq_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "kernel_to_cq_label",
+      "x": 635,
+      "y": 562,
+      "width": -40,
+      "height": -200,
+      "text": "kernel produces",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "kernel_to_cq"
+    },
+    {
+      "type": "rectangle",
+      "id": "core",
+      "x": 725,
+      "y": 155,
+      "width": 245,
+      "height": 70,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "core_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "core_label",
+      "x": 735,
+      "y": 165,
+      "width": 225,
+      "height": 50,
+      "text": "Core Runtime\naccept / recv / send",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "core",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "modules",
+      "x": 700,
+      "y": 525,
+      "width": 300,
+      "height": 82,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "modules_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "modules_label",
+      "x": 710,
+      "y": 535,
+      "width": 280,
+      "height": 62,
+      "text": "Optional Modules\nHTTP / Proxy / Game",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "modules",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "bytes_up",
+      "x": 835,
+      "y": 525,
+      "width": 0,
+      "height": -300,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -300
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "bytes_up_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "bytes_up_label",
+      "x": 845,
+      "y": 535,
+      "width": 80,
+      "height": -320,
+      "text": "bytes up",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "bytes_up"
+    },
+    {
+      "type": "arrow",
+      "id": "policy_down",
+      "x": 795,
+      "y": 225,
+      "width": 0,
+      "height": 300,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          300
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "policy_down_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "policy_down_label",
+      "x": 805,
+      "y": 235,
+      "width": 80,
+      "height": 280,
+      "text": "Send() down",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "policy_down"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 95,
+      "y": 675,
+      "width": 10,
+      "height": 10,
+      "text": "Core는 bytes와 completion만 다루고, HTTP route나 game packet 같은 해석은 module이 맡는다.",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  },
+  "files": {}
+}

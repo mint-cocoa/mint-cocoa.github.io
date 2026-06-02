@@ -1,0 +1,424 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "excalidraw-cli",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 90,
+      "y": 70,
+      "width": 10,
+      "height": 10,
+      "text": "partial send는 active byte stream 위의 cursor 문제다",
+      "fontSize": 28,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "stream_outer",
+      "x": 130,
+      "y": 185,
+      "width": 640,
+      "height": 80,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "stream_outer_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "stream_outer_label",
+      "x": 140,
+      "y": 195,
+      "width": 620,
+      "height": 60,
+      "text": "",
+      "fontSize": 17,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "stream_outer",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "stream_0",
+      "x": 130,
+      "y": 185,
+      "width": 160,
+      "height": 80,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "stream_0_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "stream_0_label",
+      "x": 140,
+      "y": 195,
+      "width": 140,
+      "height": 60,
+      "text": "A\n0-50",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "stream_0",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "stream_1",
+      "x": 290,
+      "y": 185,
+      "width": 160,
+      "height": 80,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "stream_1_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "stream_1_label",
+      "x": 300,
+      "y": 195,
+      "width": 140,
+      "height": 60,
+      "text": "A\n50-100",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "stream_1",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "stream_2",
+      "x": 450,
+      "y": 185,
+      "width": 160,
+      "height": 80,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "stream_2_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "stream_2_label",
+      "x": 460,
+      "y": 195,
+      "width": 140,
+      "height": 60,
+      "text": "B\n0-50",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "stream_2",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "stream_3",
+      "x": 610,
+      "y": 185,
+      "width": 160,
+      "height": 80,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "stream_3_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "stream_3_label",
+      "x": 620,
+      "y": 195,
+      "width": 140,
+      "height": 60,
+      "text": "B\n50-100",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "stream_3",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "cursor",
+      "x": 610,
+      "y": 160,
+      "width": 0,
+      "height": 130,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          130
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "cursor_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "cursor_label",
+      "x": 620,
+      "y": 170,
+      "width": 80,
+      "height": 110,
+      "text": "CQE res = 150B",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "cursor"
+    },
+    {
+      "type": "arrow",
+      "id": "mark",
+      "x": 610,
+      "y": 175,
+      "width": 0,
+      "height": 105,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          105
+        ]
+      ],
+      "endArrowhead": null,
+      "roughness": 2
+    },
+    {
+      "type": "rectangle",
+      "id": "done",
+      "x": 130,
+      "y": 350,
+      "width": 480,
+      "height": 70,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "done_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "done_label",
+      "x": 140,
+      "y": 360,
+      "width": 460,
+      "height": 50,
+      "text": "처리된 prefix: A 전체 + B 앞 50B",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "done",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "remain",
+      "x": 610,
+      "y": 350,
+      "width": 160,
+      "height": 70,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "remain_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "remain_label",
+      "x": 620,
+      "y": 360,
+      "width": 140,
+      "height": 50,
+      "text": "suffix\nB 뒤 50B",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "remain",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "retry",
+      "x": 690,
+      "y": 420,
+      "width": -330,
+      "height": 115,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -330,
+          115
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "retry_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "retry_label",
+      "x": 700,
+      "y": 430,
+      "width": -350,
+      "height": 95,
+      "text": "같은 SendOp으로 재제출",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "retry"
+    },
+    {
+      "type": "rectangle",
+      "id": "sendop",
+      "x": 260,
+      "y": 530,
+      "width": 420,
+      "height": 58,
+      "backgroundColor": "#c3fae8",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "sendop_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "sendop_label",
+      "x": 270,
+      "y": 540,
+      "width": 400,
+      "height": 38,
+      "text": "SendOp = payload refs + iovec cursor",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "sendop",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 105,
+      "y": 610,
+      "width": 10,
+      "height": 10,
+      "text": "queue를 섞는 문제가 아니라 active SendOp 내부 cursor를 어디까지 전진시켰는지의 문제다.",
+      "fontSize": 17,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  },
+  "files": {}
+}
