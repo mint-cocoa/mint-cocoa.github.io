@@ -1,0 +1,368 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "excalidraw-cli",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 90,
+      "y": 70,
+      "width": 10,
+      "height": 10,
+      "text": "WorkerOutbox: session별 mailbox가 Room output 순서를 보존한다",
+      "fontSize": 27,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "room",
+      "x": 100,
+      "y": 150,
+      "width": 250,
+      "height": 90,
+      "backgroundColor": "#d0bfff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "room_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "room_label",
+      "x": 110,
+      "y": 160,
+      "width": 230,
+      "height": 70,
+      "text": "Room JobQueue\n#1 S_MOVE\n#2 S_DESPAWN",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "room",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "enqueue",
+      "x": 350,
+      "y": 195,
+      "width": 115,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          115,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "enqueue_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "enqueue_label",
+      "x": 360,
+      "y": 205,
+      "width": 95,
+      "height": 40,
+      "text": "EnqueueOutbound",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "enqueue"
+    },
+    {
+      "type": "rectangle",
+      "id": "mailbox",
+      "x": 465,
+      "y": 125,
+      "width": 410,
+      "height": 280,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "mailbox_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "mailbox_label",
+      "x": 475,
+      "y": 135,
+      "width": 390,
+      "height": 260,
+      "text": "WorkerOutbox mailbox",
+      "fontSize": 22,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "mailbox",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "lane_a",
+      "x": 505,
+      "y": 190,
+      "width": 330,
+      "height": 50,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "lane_a_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "lane_a_label",
+      "x": 515,
+      "y": 200,
+      "width": 310,
+      "height": 30,
+      "text": "Session A: [S_MOVE][S_DESPAWN]",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "lane_a",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "lane_b",
+      "x": 505,
+      "y": 260,
+      "width": 330,
+      "height": 50,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "lane_b_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "lane_b_label",
+      "x": 515,
+      "y": 270,
+      "width": 310,
+      "height": 30,
+      "text": "Session B: [S_MOVE][S_DESPAWN]",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "lane_b",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "lane_c",
+      "x": 505,
+      "y": 330,
+      "width": 330,
+      "height": 50,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "lane_c_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "lane_c_label",
+      "x": 515,
+      "y": 340,
+      "width": 310,
+      "height": 30,
+      "text": "Session C: [S_MOVE][S_DESPAWN]",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "lane_c",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "drain",
+      "x": 875,
+      "y": 265,
+      "width": 130,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          130,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "drain_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "drain_label",
+      "x": 885,
+      "y": 275,
+      "width": 110,
+      "height": 40,
+      "text": "drain phase",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "drain"
+    },
+    {
+      "type": "rectangle",
+      "id": "sendq",
+      "x": 1005,
+      "y": 220,
+      "width": 130,
+      "height": 90,
+      "backgroundColor": "#a5d8ff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "sendq_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "sendq_label",
+      "x": 1015,
+      "y": 230,
+      "width": 110,
+      "height": 70,
+      "text": "Session\nSendQueue",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "sendq",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "layers",
+      "x": 155,
+      "y": 545,
+      "width": 850,
+      "height": 95,
+      "backgroundColor": "#f8f9fa",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "layers_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "layers_label",
+      "x": 165,
+      "y": 555,
+      "width": 830,
+      "height": 75,
+      "text": "보장 범위\nRoom JobQueue = domain decision 순서\nWorkerOutbox = 같은 session으로 가는 output FIFO\nSession SendQueue = socket byte stream 순서",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "layers",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 110,
+      "y": 705,
+      "width": 10,
+      "height": 10,
+      "text": "current ring이어도 즉시 Send하지 않고 mailbox에 넣기 때문에 inline path가 async path를 추월하지 않는다.",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  },
+  "files": {}
+}

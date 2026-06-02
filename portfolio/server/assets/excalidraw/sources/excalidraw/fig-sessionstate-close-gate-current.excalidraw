@@ -1,0 +1,652 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "excalidraw-cli",
+  "elements": [
+    {
+      "type": "text",
+      "id": "title",
+      "x": 90,
+      "y": 70,
+      "width": 10,
+      "height": 10,
+      "text": "SessionState gate: 문이 닫힌 뒤 새 SQE는 들어오지 못한다",
+      "fontSize": 28,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "rectangle",
+      "id": "state_axis_outer",
+      "x": 150,
+      "y": 170,
+      "width": 840,
+      "height": 86,
+      "backgroundColor": "#ffffff",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_axis_outer_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_axis_outer_label",
+      "x": 160,
+      "y": 180,
+      "width": 820,
+      "height": 66,
+      "text": "",
+      "fontSize": 17,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_axis_outer",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_axis_0",
+      "x": 150,
+      "y": 170,
+      "width": 210,
+      "height": 86,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_axis_0_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_axis_0_label",
+      "x": 160,
+      "y": 180,
+      "width": 190,
+      "height": 66,
+      "text": "kOpen",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_axis_0",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_axis_1",
+      "x": 360,
+      "y": 170,
+      "width": 210,
+      "height": 86,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_axis_1_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_axis_1_label",
+      "x": 370,
+      "y": 180,
+      "width": 190,
+      "height": 66,
+      "text": "kClosing",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_axis_1",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_axis_2",
+      "x": 570,
+      "y": 170,
+      "width": 210,
+      "height": 86,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_axis_2_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_axis_2_label",
+      "x": 580,
+      "y": 180,
+      "width": 190,
+      "height": 66,
+      "text": "kDraining",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_axis_2",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "rectangle",
+      "id": "state_axis_3",
+      "x": 780,
+      "y": 170,
+      "width": 210,
+      "height": 86,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "state_axis_3_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "state_axis_3_label",
+      "x": 790,
+      "y": 180,
+      "width": 190,
+      "height": 66,
+      "text": "kClosed",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "state_axis_3",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "state1",
+      "x": 360,
+      "y": 213,
+      "width": 0,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "roughness": 2
+    },
+    {
+      "type": "arrow",
+      "id": "trigger",
+      "x": 150,
+      "y": 120,
+      "width": 260,
+      "height": 65,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          260,
+          65
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "trigger_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "trigger_label",
+      "x": 160,
+      "y": 130,
+      "width": 240,
+      "height": 45,
+      "text": "recv res == 0 / Disconnect()",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "trigger"
+    },
+    {
+      "type": "arrow",
+      "id": "drain",
+      "x": 570,
+      "y": 256,
+      "width": 210,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          210,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "drain_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "drain_label",
+      "x": 580,
+      "y": 266,
+      "width": 190,
+      "height": 40,
+      "text": "submitted I/O drain",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "drain"
+    },
+    {
+      "type": "arrow",
+      "id": "release",
+      "x": 780,
+      "y": 256,
+      "width": 210,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          210,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "release_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "release_label",
+      "x": 790,
+      "y": 266,
+      "width": 190,
+      "height": 40,
+      "text": "pending_io_ == 0",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "release"
+    },
+    {
+      "type": "rectangle",
+      "id": "gate_wall",
+      "x": 430,
+      "y": 285,
+      "width": 38,
+      "height": 250,
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "gate_wall_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "gate_wall_label",
+      "x": 440,
+      "y": 295,
+      "width": 18,
+      "height": 230,
+      "text": "gate\nclosed",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "gate_wall",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "text",
+      "id": "requests",
+      "x": 95,
+      "y": 410,
+      "width": 10,
+      "height": 10,
+      "text": "외부 요청\nSend()\nRegisterRecv()\nRunOnOwner task",
+      "fontSize": 20,
+      "strokeColor": "#1e1e1e",
+      "fontFamily": 1
+    },
+    {
+      "type": "arrow",
+      "id": "req",
+      "x": 250,
+      "y": 455,
+      "width": 180,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          180,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "roughness": 2
+    },
+    {
+      "type": "diamond",
+      "id": "check",
+      "x": 510,
+      "y": 390,
+      "width": 180,
+      "height": 130,
+      "backgroundColor": "#fff3bf",
+      "fillStyle": "hachure",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "check_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "check_label",
+      "x": 520,
+      "y": 400,
+      "width": 160,
+      "height": 110,
+      "text": "state ==\nkOpen?",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "check",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "yes",
+      "x": 600,
+      "y": 390,
+      "width": -185,
+      "height": -135,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          -185,
+          -135
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "yes_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "yes_label",
+      "x": 610,
+      "y": 400,
+      "width": -205,
+      "height": -155,
+      "text": "yes: SQE 제출",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "yes"
+    },
+    {
+      "type": "rectangle",
+      "id": "blocked",
+      "x": 770,
+      "y": 390,
+      "width": 245,
+      "height": 78,
+      "backgroundColor": "#b2f2bb",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "blocked_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "blocked_label",
+      "x": 780,
+      "y": 400,
+      "width": 225,
+      "height": 58,
+      "text": "no: drop / return\nrecv 재등록 안 함",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "blocked",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "no",
+      "x": 690,
+      "y": 455,
+      "width": 80,
+      "height": 0,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          80,
+          0
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "no_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "no_label",
+      "x": 700,
+      "y": 465,
+      "width": 60,
+      "height": 40,
+      "text": "no",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "no"
+    },
+    {
+      "type": "rectangle",
+      "id": "bad",
+      "x": 770,
+      "y": 540,
+      "width": 245,
+      "height": 78,
+      "backgroundColor": "#ffc9c9",
+      "fillStyle": "solid",
+      "strokeColor": "#1e1e1e",
+      "boundElements": [
+        {
+          "id": "bad_label",
+          "type": "text"
+        }
+      ],
+      "roundness": {
+        "type": 3
+      },
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "bad_label",
+      "x": 780,
+      "y": 550,
+      "width": 225,
+      "height": 58,
+      "text": "검사가 없으면\npending_io_가 drain 중 증가",
+      "fontSize": 18,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "bad",
+      "strokeColor": "#1e1e1e"
+    },
+    {
+      "type": "arrow",
+      "id": "bad_arrow",
+      "x": 610,
+      "y": 520,
+      "width": 160,
+      "height": 55,
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          160,
+          55
+        ]
+      ],
+      "endArrowhead": "arrow",
+      "boundElements": [
+        {
+          "id": "bad_arrow_label",
+          "type": "text"
+        }
+      ],
+      "roughness": 2
+    },
+    {
+      "type": "text",
+      "id": "bad_arrow_label",
+      "x": 620,
+      "y": 530,
+      "width": 140,
+      "height": 35,
+      "text": "state check 없음",
+      "fontSize": 14,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "bad_arrow"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "x": 100,
+      "y": 705,
+      "width": 10,
+      "height": 10,
+      "text": "핵심은 순서 나열이 아니라 kClosing 이후 gate가 닫혀 새 send/recv/register 경로를 모두 막는다는 점이다.",
+      "fontSize": 18,
+      "strokeColor": "#334155",
+      "fontFamily": 1
+    }
+  ],
+  "appState": {
+    "viewBackgroundColor": "#ffffff",
+    "gridSize": null
+  },
+  "files": {}
+}
