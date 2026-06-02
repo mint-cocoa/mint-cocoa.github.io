@@ -133,7 +133,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#runtimeweb" id="toc-runtimeweb" class="nav-link" data-scroll-target="#runtimeweb">RuntimeWeb</a></li>
   <li><a href="#runtimeproxy" id="toc-runtimeproxy" class="nav-link" data-scroll-target="#runtimeproxy">RuntimeProxy</a></li>
   <li><a href="#runtimegame" id="toc-runtimegame" class="nav-link" data-scroll-target="#runtimegame">RuntimeGame</a></li>
-  <li><a href="#결론-1" id="toc-결론-1" class="nav-link" data-scroll-target="#결론-1">결론</a></li>
+  <li><a href="#검증과-벤치마크" id="toc-검증과-벤치마크" class="nav-link" data-scroll-target="#검증과-벤치마크">검증과 벤치마크</a></li>
+  <li><a href="#core-echo-벤치마크" id="toc-core-echo-벤치마크" class="nav-link" data-scroll-target="#core-echo-벤치마크">Core echo 벤치마크</a></li>
+  <li><a href="#game-브로드캐스트-벤치마크" id="toc-game-브로드캐스트-벤치마크" class="nav-link" data-scroll-target="#game-브로드캐스트-벤치마크">Game 브로드캐스트 벤치마크</a></li>
+  <li><a href="#room-분산-결과" id="toc-room-분산-결과" class="nav-link" data-scroll-target="#room-분산-결과">Room 분산 결과</a></li>
+  <li><a href="#결과-해석" id="toc-결과-해석" class="nav-link" data-scroll-target="#결과-해석">결과 해석</a></li>
+  <li><a href="#최종-정리" id="toc-최종-정리" class="nav-link" data-scroll-target="#최종-정리">최종 정리</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1161,10 +1166,6 @@ IoRing
 <td>보류 queue 한도 초과</td>
 <td>peer 쌍을 정리</td>
 </tr>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
 <p>TLS proxy에서는 같은 원칙이 plaintext 단계에도 적용됩니다. downstream socket이 막혔는데 plaintext를 계속 만들면, 암호화 전 원문 데이터가 별도 queue에 쌓입니다. 이 queue도 bounded queue로 다루고, socket이 drain된 뒤에만 암호화와 송신을 재개합니다.</p>
@@ -1447,10 +1448,297 @@ IoRing
 </tbody>
 </table>
 </section>
-<section id="결론-1" class="level3">
-<h3 class="anchored" data-anchor-id="결론-1">결론</h3>
-<p>처음에는 서버의 연결 수락, 수신, 송신, 연결 종료 흐름을 직접 구현하는 문제로 시작했습니다. 하지만 실제로 어려웠던 부분은 빠르게 I/O를 제출하는 코드가 아니라, 완료 통지가 늦게 도착하고, 버퍼 수명이 엇갈리고, 연결 종료 중 새 작업이 들어오고, 여러 워커가 같은 세션이나 Room을 건드리는 상황을 끝까지 정리하는 것이었습니다.</p>
-<p>그래서 최종 모델은 수명, 버퍼, 흐름, 동시성의 규칙을 고정하고, Web/Proxy/Game은 그 위에서 각자 프로토콜을 해석합니다. 이 경계가 유지되기 때문에 같은 런타임을 HTTP 서버, TCP/TLS 프록시, 패킷 게임 서버로 확장할 수 있었습니다.</p>
+<section id="검증과-벤치마크" class="level3">
+<h3 class="anchored" data-anchor-id="검증과-벤치마크">검증과 벤치마크</h3>
+<p>벤치마크는 “<code>io_uring</code>이 항상 빠르다”는 주장을 하기 위한 것이 아니라, 병목이 어디에 있는지 분리해서 보기 위한 검증입니다. 그래서 Core echo 벤치마크와 Game 브로드캐스트 벤치마크를 나누어 해석했습니다.</p>
+<p>테스트 기준은 아래와 같습니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>조건</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>환경</td>
+<td>WSL2 Ubuntu 24.04, localhost</td>
+</tr>
+<tr class="even">
+<td>도구</td>
+<td><code>game_bench</code>, <code>echo_bench</code>, <code>tools/run_bench.sh</code></td>
+</tr>
+<tr class="odd">
+<td>게임 로직</td>
+<td>Login -&gt; EnterGame -&gt; Move 20Hz -&gt; Attack 2Hz</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="core-echo-벤치마크" class="level3">
+<h3 class="anchored" data-anchor-id="core-echo-벤치마크">Core echo 벤치마크</h3>
+<p>게임 로직 없이 Core TCP 경로만 측정한 결과입니다. 64바이트 페이로드, 파이프라인=1 조건에서 측정했습니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">클라이언트</th>
+<th style="text-align: right;">처리량 echo/s</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p99</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">218,498</td>
+<td style="text-align: right;">30us</td>
+<td style="text-align: right;">157us</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">305,183</td>
+<td style="text-align: right;">152us</td>
+<td style="text-align: right;">367us</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">326,913</td>
+<td style="text-align: right;">293us</td>
+<td style="text-align: right;">594us</td>
+</tr>
+</tbody>
+</table>
+<p>이 결과는 Core의 순수 송신/수신 경로가 밀리초 미만 응답성을 유지한다는 근거입니다. 다만 localhost/WSL2 조건이므로 절대 성능 홍보보다는 Core 전송 경로가 병목 없이 동작하는지 확인한 결과로 보는 것이 맞습니다.</p>
+</section>
+<section id="game-브로드캐스트-벤치마크" class="level3">
+<h3 class="anchored" data-anchor-id="game-브로드캐스트-벤치마크">Game 브로드캐스트 벤치마크</h3>
+<p>Game 벤치마크는 Core I/O 경로만 보는 테스트가 아닙니다. <code>C_MOVE</code>를 받은 뒤 Room이 <code>S_MOVE</code>를 여러 클라이언트에게 브로드캐스트하는 경로까지 포함합니다. 즉 여기서는 I/O 백엔드뿐 아니라 Room fan-out, ring 간 송신, Room 직렬화가 함께 드러납니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">봇 수</th>
+<th>구성</th>
+<th style="text-align: right;">io_uring p50</th>
+<th style="text-align: right;">epoll p50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td>4 threads</td>
+<td style="text-align: right;">838us</td>
+<td style="text-align: right;">3,322us</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">200</td>
+<td>4 threads</td>
+<td style="text-align: right;">10,001us</td>
+<td style="text-align: right;">4,419,583us</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">400</td>
+<td>8 threads</td>
+<td style="text-align: right;">3,025us</td>
+<td style="text-align: right;">측정 불가</td>
+</tr>
+</tbody>
+</table>
+<p>200봇 단일 Room에서는 epoll 기준 구현이 뮤텍스 경합과 브로드캐스트 fan-out 영향으로 초 단위까지 밀렸고, io_uring 런타임은 ms 단위를 유지했습니다. 이 결과는 단순히 CQ/SQ가 빠르다는 의미보다, owner ring과 Room job 경계를 분리해 둔 구조가 대규모 fan-out에서 무너지지 않았다는 의미가 큽니다.</p>
+<p>꼬리 지연 시간도 같은 방향을 보였습니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">봇 수</th>
+<th>구성</th>
+<th style="text-align: right;">io_uring p99</th>
+<th style="text-align: right;">epoll p99</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td>1 thread</td>
+<td style="text-align: right;">1,887us</td>
+<td style="text-align: right;">6,067us</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">200</td>
+<td>4 threads</td>
+<td style="text-align: right;">24,191us</td>
+<td style="text-align: right;">11,794,952us</td>
+</tr>
+</tbody>
+</table>
+<p>처리량은 <code>S_MOVE + S_ATTACK + S_DAMAGE</code> 수신 메시지/초 기준으로 봤습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">봇 수</th>
+<th>구성</th>
+<th style="text-align: right;">io_uring</th>
+<th style="text-align: right;">epoll</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">40</td>
+<td>1 thread</td>
+<td style="text-align: right;">37,288 msg/s</td>
+<td style="text-align: right;">37,288 msg/s</td>
+<td>소규모에서는 I/O 백엔드 차이가 거의 드러나지 않음</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">200</td>
+<td>4 threads</td>
+<td style="text-align: right;">950,656 msg/s</td>
+<td style="text-align: right;">523,846 msg/s</td>
+<td>fan-out이 커지며 epoll 기준 구현의 경합이 먼저 드러남</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="room-분산-결과" class="level3">
+<h3 class="anchored" data-anchor-id="room-분산-결과">Room 분산 결과</h3>
+<p>봇을 여러 Room으로 분산하면 Room당 fan-out 크기가 줄어듭니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>규모</th>
+<th>구성</th>
+<th style="text-align: right;">io_uring p50</th>
+<th style="text-align: right;">epoll p50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>200 bots / 10 Rooms</td>
+<td>4T x 50C</td>
+<td style="text-align: right;">846us</td>
+<td style="text-align: right;">897us</td>
+</tr>
+<tr class="even">
+<td>400 bots / 20 Rooms</td>
+<td>4T x 100C</td>
+<td style="text-align: right;">920us</td>
+<td style="text-align: right;">691us</td>
+</tr>
+</tbody>
+</table>
+<p>Room 분산 이후에는 두 백엔드 모두 밀리초 미만 수준으로 수렴했습니다. 이 결과는 중요합니다. 병목이 “항상 I/O 백엔드”에 있는 것이 아니라, 단일 Room fan-out 크기와 Room 직렬화 범위에 따라 달라진다는 뜻이기 때문입니다. 따라서 이 벤치마크의 결론은 <code>io_uring</code>의 절대 우위가 아니라, Core I/O 경로와 Game 브로드캐스트 경로의 병목을 분리해서 볼 수 있게 되었다는 점입니다.</p>
+<div class="flow-visual" role="img" aria-label="벤치마크는 Core echo와 Game fan-out과 Room 분산을 나누어 병목 위치를 해석한다">
+<p class="flow-title">
+벤치마크 해석 순서
+</p>
+<div class="flow-steps">
+<pre><code>&lt;div class="flow-step"&gt;
+  &lt;strong&gt;Core echo&lt;/strong&gt;
+  &lt;p&gt;프로토콜 없는 전송 경로 자체의 응답성을 확인한다.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="flow-step flow-accent-amber"&gt;
+  &lt;strong&gt;single Room&lt;/strong&gt;
+  &lt;p&gt;fan-out이 커질 때 Room 출력과 I/O 경계가 같이 드러난다.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="flow-step flow-accent-green"&gt;
+  &lt;strong&gt;Room 분산&lt;/strong&gt;
+  &lt;p&gt;Room당 fan-out이 줄면 병목 위치가 다시 이동한다.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="flow-step"&gt;
+  &lt;strong&gt;결론&lt;/strong&gt;
+  &lt;p&gt;절대 성능보다 어떤 경계가 먼저 포화되는지를 읽는다.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="결과-해석" class="level3">
+<h3 class="anchored" data-anchor-id="결과-해석">결과 해석</h3>
+<p>이 구현에서 얻은 가장 큰 결과는 기능이 많아진 것이 아니라 경계가 선명해진 것입니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>검증 항목</th>
+<th>확인한 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Core echo</td>
+<td>프로토콜 없는 전송 경로가 독립적으로 측정 가능</td>
+</tr>
+<tr class="even">
+<td>Web 모듈</td>
+<td>HTTP 파서/라우터/스트리밍을 Core 밖에 유지</td>
+</tr>
+<tr class="odd">
+<td>Proxy 모듈</td>
+<td>스트림 중계와 TLS/SNI 라우팅을 Core 밖에 유지</td>
+</tr>
+<tr class="even">
+<td>Game 모듈</td>
+<td>패킷/Room 실행 모델을 Core 밖에 유지</td>
+</tr>
+<tr class="odd">
+<td>Game 벤치마크</td>
+<td>fan-out 병목과 I/O 백엔드 병목을 분리해서 해석 가능</td>
+</tr>
+<tr class="even">
+<td>Room 분산</td>
+<td>병목이 Room 크기에 따라 이동한다는 점 확인</td>
+</tr>
+</tbody>
+</table>
+<p>즉 이 장의 결론은 “Web, Proxy, Game을 모두 만들었다”가 아닙니다. 같은 Core 런타임이 서로 다른 프로토콜 모듈을 수용해도 Core 내부 불변식이 바뀌지 않았다는 점입니다.</p>
+</section>
+<section id="최종-정리" class="level3">
+<h3 class="anchored" data-anchor-id="최종-정리">최종 정리</h3>
+<p>최종 구조에서 유지해야 하는 불변식은 다음과 같습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>불변식</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Core는 프로토콜을 모른다</td>
+<td>HTTP, 프록시 라우팅, 게임 패킷의 의미는 모듈 책임</td>
+</tr>
+<tr class="even">
+<td>세션 I/O 상태는 owner ring에서만 바뀐다</td>
+<td>송신 큐, 수신 재등록, 연결 종료 상태 전이를 한 실행 문맥으로 직렬화</td>
+</tr>
+<tr class="odd">
+<td>제출된 I/O는 CQE까지 생존한다</td>
+<td>늦은 CQE가 파괴된 세션이나 반환된 버퍼에 접근하지 않음</td>
+</tr>
+<tr class="even">
+<td>닫기는 즉시 해제가 아니다</td>
+<td>연결 종료는 상태 전환이고, 해제는 비우기 이후에 확정</td>
+</tr>
+<tr class="odd">
+<td>송신 큐는 무제한 버퍼가 아니다</td>
+<td>watermark, 수신 일시 정지, 연결 종료 정책의 기준</td>
+</tr>
+<tr class="even">
+<td>Room/DB/프로토콜 파싱은 Core 밖에 둔다</td>
+<td>Core 런타임이 특정 서비스 프레임워크로 굳지 않게 함</td>
+</tr>
+</tbody>
+</table>
+<p>처음에는 서버의 연결 수락, 수신, 송신, 연결 종료 흐름을 직접 구현하는 문제로 시작했습니다. 하지만 실제로 어려웠던 부분은 빠르게 I/O를 제출하는 코드가 아니라, 완료 통지가 늦게 도착하고, 버퍼 수명이 엇갈리고, 연결 종료 중 새 작업이 들어오고, 여러 워커가 같은 세션이나 Room을 건드리는 상황을 끝까지 안전하게 정리하는 것이었습니다.</p>
+<p>그래서 최종 모델은 “빠른 서버”라기보다 “완료 통지 기반 전송 런타임”에 가깝습니다. Core는 수명, 버퍼, 흐름, 동시성의 규칙을 고정하고, Web/Proxy/Game은 그 위에서 각자 프로토콜을 해석합니다. 이 경계가 유지되기 때문에 같은 런타임을 HTTP 서버, TCP/TLS 프록시, 패킷 게임 서버로 확장할 수 있었습니다.</p>
 </section>
 </section>
 
