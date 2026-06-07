@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Room 상태 순서, WorkerOutbox, Session owner ring이 서로 다른 순서를 보장하는 이유를 다룹니다.">
 
-<title>ServerCore Portfolio</title>
+<title>4&nbsp; Room과 Session 직렬화 – ServerCore Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,24 +27,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./servercore/1.overview.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../servercore/5.producer-consumer-backpressure.html" rel="next">
+<link href="../servercore/3.buffer-management.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -84,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">ServerCore Portfolio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../servercore/1.overview.html">ServerCore Runtime</a></li><li class="breadcrumb-item"><a href="../servercore/4.concurrency-management.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Room과 Session 직렬화</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="검색" onclick="window.quartoOpenSearch();">
@@ -99,7 +101,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">ServerCore Portfolio</a> 
+      <a href="../">ServerCore Portfolio</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -111,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ServerCore Portfolio</span></a>
   </div>
 </li>
@@ -126,37 +128,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/1.overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/1.overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">전체 구조</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/2.lifecycle-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/2.lifecycle-management.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제출된 I/O와 콜백 대상 생존</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/3.buffer-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/3.buffer-management.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">수신 버퍼</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/4.concurrency-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/4.concurrency-management.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Room과 Session 직렬화</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/5.producer-consumer-backpressure.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/5.producer-consumer-backpressure.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SendQueue를 메모리 압력 측정 단위로</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/6.summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/6.summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">선택 모듈로 확장한 결과</span></span></a>
   </div>
 </li>
@@ -172,16 +174,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#servercore-portfolio" id="toc-servercore-portfolio" class="nav-link active" data-scroll-target="#servercore-portfolio">ServerCore Portfolio</a></li>
+  <li><a href="#직렬화-경계가-필요한-이유" id="toc-직렬화-경계가-필요한-이유" class="nav-link active" data-scroll-target="#직렬화-경계가-필요한-이유"><span class="header-section-number">4.1</span> 직렬화 경계가 필요한 이유</a></li>
+  <li><a href="#room-출력-순서-보장" id="toc-room-출력-순서-보장" class="nav-link" data-scroll-target="#room-출력-순서-보장"><span class="header-section-number">4.2</span> Room 출력 순서 보장</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../servercore/1.overview.html">ServerCore Runtime</a></li><li class="breadcrumb-item"><a href="../servercore/4.concurrency-management.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Room과 Session 직렬화</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">ServerCore Portfolio</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Room과 Session 직렬화</span></h1>
 </div>
 
 
@@ -189,12 +192,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">공개</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2026년 6월 7일</p>
-    </div>
-  </div>
   
     
   </div>
@@ -204,9 +201,160 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="servercore-portfolio" class="level1 unnumbered">
-<h1 class="unnumbered">ServerCore Portfolio</h1>
-<p>Linux <code>io_uring</code> 기반 비동기 서버 런타임 <code>ServerCore</code> 구현 포트폴리오</p>
+<p>게임 서버에서는 실시간으로 상태가 변하고, 여러 플레이어가 그 상태를 공유합니다. 하지만 각 플레이어의 입력은 서로 다른 네트워크 레이턴시를 거쳐 서버에 도착하므로, 서버는 도착한 입력들을 어떤 순서로 처리할지 결정해야 합니다.</p>
+<p>게임 서버에서 <code>Room</code>은 같은 공간, 채널, 전투 인스턴스처럼 함께 상태를 공유하는 최소 단위입니다. 플레이어 입장, 퇴장, 이동, 공격, 포탈 이동, 브로드캐스트 대상 결정처럼 “누가 같은 공간에 있고, 어떤 순서로 상태가 바뀌었는지”를 판단해야 하는 작업은 Room의 상태를 기준으로 처리됩니다.</p>
+<p>Room은 다음 정보를 하나의 상태 단위로 묶습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>멤버 목록</td>
+<td>현재 Room에 들어와 있는 플레이어와 세션</td>
+</tr>
+<tr class="even">
+<td>도메인 상태</td>
+<td>위치, 이동, 전투 상태처럼 Room 안에서 공유되는 값</td>
+</tr>
+<tr class="odd">
+<td>입력 작업</td>
+<td>입장, 퇴장, 이동, 공격, 포탈 이동처럼 순서가 필요한 요청</td>
+</tr>
+<tr class="even">
+<td>출력 결정</td>
+<td>어떤 플레이어에게 어떤 패킷을 보낼지에 대한 브로드캐스트 결정</td>
+</tr>
+</tbody>
+</table>
+<p>Room이 직접 관리하는 것은 Room 내부 상태입니다. 예를 들면 현재 Room에 들어온 플레이어 목록, Room 안에서 처리할 작업 순서, 그리고 어떤 세션에게 어떤 패킷을 보내야 하는지에 대한 결정, 즉 “게임 상태를 어떤 순서로 바꿀지”를 정해야 합니다.</p>
+<p>Room이 브로드캐스트 대상을 결정하더라도, 실제 <code>Send()</code>가 어느 스레드에서 어떤 순서로 실행될지는 별도의 문제입니다. 같은 Session에는 Room에서 발생한 이동/전투 패킷뿐 아니라 채팅, 인벤토리, 로그인, 시스템 알림처럼 다른 경로의 패킷도 들어올 수 있습니다.</p>
+<p>따라서 Room과 Session은 서로 다른 순서를 보장합니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>단위</th>
+<th>보장하는 순서</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Room</td>
+<td>공유 게임 상태의 변경 순서</td>
+</tr>
+<tr class="even">
+<td>Session</td>
+<td>하나의 TCP 연결에 쓰이는 바이트 순서</td>
+</tr>
+</tbody>
+</table>
+<p>Room은 “게임 상태를 순서대로 바꾸는 곳”이고, Session은 “한 연결에 데이터를 순서대로 쓰는 곳”입니다. Room의 브로드캐스트 결과는 Session 송신 큐에 들어가는 입력일 뿐이며, 실제 커널 송신 제출과 부분 송신 복구는 Session의 책임입니다.</p>
+<hr>
+<section id="직렬화-경계가-필요한-이유" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="직렬화-경계가-필요한-이유"><span class="header-section-number">4.1</span> 직렬화 경계가 필요한 이유</h2>
+<p><code>iouring-runtime</code>의 게임 서버는 여러 <code>IoWorker</code>가 각자의 <code>io_uring</code> 루프를 가지고 병렬로 실행됩니다. 이 구조에서는 같은 Room이나 같은 Session에 대한 요청이 서로 다른 스레드에서 동시에 발생할 수 있습니다.</p>
+<p>단순하게 모든 상태를 뮤텍스로 보호할 수도 있습니다. 하지만 그렇게 하면 게임 로직, 소켓 I/O, Room 브로드캐스트, Session 송신 경로 전체에 락이 퍼집니다. 락 범위가 넓어질수록 어떤 상태를 누가 소유하는지 불명확해지고, 교착이나 락 순서 문제도 생기기 쉬웠습니다.</p>
+<p>그래서 전역 락 대신 상태의 소유자를 명확히 나누고, 스레드 간 작업을 해당 상태의 소유자 실행 context로 모으는 방식을 선택했습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 16%">
+<col style="width: 39%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>경계</th>
+<th>소유자</th>
+<th>통과하는 데이터</th>
+<th>보장하는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Room JobQueue</code></td>
+<td>Room을 실행 중인 워커</td>
+<td>join, leave, move, attack, portal, 브로드캐스트 결정</td>
+<td>Room 상태는 한 번에 하나의 job만 변경</td>
+</tr>
+<tr class="even">
+<td><code>WorkerOutbox</code></td>
+<td>대상 <code>IoWorker</code></td>
+<td>세션별 Room 출력</td>
+<td>같은 세션으로 가는 Room 출력은 FIFO로 비워짐</td>
+</tr>
+<tr class="odd">
+<td><code>Session owner ring</code></td>
+<td>해당 세션의 <code>IoRing</code> 스레드</td>
+<td><code>Send()</code>, <code>send_queue_</code>, <code>SendOp</code></td>
+<td>한 연결의 쓰기 상태는 소유자 ring에서만 변경</td>
+</tr>
+</tbody>
+</table>
+<p>Room의 <code>JobQueue</code>는 여러 세션에서 들어온 요청은 큐에 쌓이지만, Room owner는 그 큐를 한 번에 하나씩만 비우며 Room 상태를 변경합니다. Room이 만든 출력은 바로 세션에 쓰지 않고 <code>WorkerOutbox</code>라는 출력 메일박스에 세션별로 들어갑니다. 마지막으로 각 세션 owner ring에서 그 큐를 <code>Session::SendQueue</code>로 옮기기 때문에, Room 결정 순서가 같은 세션의 송신 큐 삽입 순서로 이어집니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/servercore/fig-servercore-ordering-layers.svg" class="img-fluid figure-img"></p>
+<figcaption>fig servercore ordering layers</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="room-출력-순서-보장" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="room-출력-순서-보장"><span class="header-section-number">4.2</span> Room 출력 순서 보장</h2>
+<p>Room이 만든 패킷을 곧바로 각 Session 소유자 ring 으로 흩어 보내면, 클라이언트가 보는 순서가 Room의 처리 순서와 달라질 수 있습니다.</p>
+<p>기존 <code>RunOnRing()</code> 방식은 대상 ring이 현재 ring이면 즉시 실행하고, 다른 ring이면 비동기로 전달했습니다. 이 차이 때문에 Room 내부의 논리 순서와 실제 <code>Session::SendQueue</code> 삽입 순서가 달라질 수 있습니다.</p>
+<p>예를 들어 Room이 같은 세션에 대해 <code>Packet #1</code>, <code>Packet #2</code>를 순서대로 만들었다고 하더라도, 하나는 현재 ring에서 즉시 <code>Send()</code>되고 다른 하나는 다른 ring으로 비동기 전달되면 실제 Session 송신 큐에 들어가는 순서가 Room의 출력 순서와 달라질 수 있습니다.</p>
+<p>Room은 순서대로 처리했지만, 출력 경로가 즉시 실행 경로와 비동기 실행 경로로 갈라지면서 실제 송신 큐 삽입 순서가 뒤집힐 수 있었습니다.</p>
+<p>이를 해결하기 위해 Room에서 나온 출력은 세션에 바로 <code>Send()</code>하지 않고, 대상 쓰레드의 발신 메일박스인 <code>WorkerOutbox</code>에 먼저 넣습니다.</p>
+<p><code>Room::SendTo()</code>, <code>BroadcastAll()</code>, <code>BroadcastExcept()</code>는 모두 <code>worker-&gt;EnqueueOutbound(...)</code>를 호출합니다.</p>
+<p><code>WorkerOutbox</code>는 세션 id별 큐를 가지고, <code>IoWorker::Run()</code>의 drain 단계에서 소유 스레드가 직접 비웁니다. 즉시 <code>Send()</code>하지 않고 반드시 outbox를 거치기 때문에, 같은 세션으로 가는 Room 출력은 하나의 큐 경로를 통과합니다.</p>
+<p>각 Session은 자신을 소유한 <code>IoWorker</code> 스레드가 정해져 있습니다. 예를 들어 1번 세션은 1번 스레드, 2번 세션은 2번 스레드, 3번 세션은 3번 스레드가 소유합니다. Room은 여러 Session에서 들어온 입력을 하나의 Room 입력 큐로 모아 처리하지만, Room이 만든 출력은 다시 각 Session을 소유한 스레드의 <code>outbox[session]</code>으로 돌아갑니다.</p>
+<p>따라서 같은 Session의 출력은 항상 같은 소유 스레드 큐를 통과합니다. Room이 전체 입력을 <code>#1 -&gt; #2 -&gt; #3 -&gt; #4 -&gt; #5 -&gt; #6</code> 순서로 처리하더라도, 출력 단계에서는 대상 Session별 큐로 다시 나뉩니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>대상 Session</th>
+<th>소유 스레드</th>
+<th>유지되는 출력 순서</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Session 1</td>
+<td>Thread 1</td>
+<td><code>#1 -&gt; #4</code></td>
+</tr>
+<tr class="even">
+<td>Session 2</td>
+<td>Thread 2</td>
+<td><code>#2 -&gt; #5</code></td>
+</tr>
+<tr class="odd">
+<td>Session 3</td>
+<td>Thread 3</td>
+<td><code>#3 -&gt; #6</code></td>
+</tr>
+</tbody>
+</table>
+<p>Room이 <code>ChatMessage #1</code>, <code>ChatMessage #2</code>를 순서대로 처리하면 Room JobQueue는 두 메시지의 브로드캐스트 결정 순서를 보장합니다. 그 결과는 대상 워커의 <code>outbox[session]</code>에 같은 순서로 들어가고, <code>DrainOutbox()</code>가 이를 <code>Session::SendQueue</code>로 순서대로 밀어 넣습니다. 마지막으로 실제 TCP 바이트 스트림의 순서는 Session의 <code>SendQueue</code>와 활성 <code>SendOp</code>이 유지합니다.</p>
+<p>전체 흐름은 다음과 같습니다.</p>
+<pre class="text"><code>Room JobQueue
+  -&gt; Room 상태 변경
+  -&gt; 브로드캐스트 대상 결정
+  -&gt; WorkerOutbox[session] enqueue
+  -&gt; IoWorker::DrainOutbox()
+  -&gt; Session::SendQueue enqueue
+  -&gt; active SendOp
+  -&gt; io_uring send</code></pre>
+<p>이 경로를 통해 Room의 상태 변경 순서, Room 출력의 세션별 전달 순서, 그리고 Session의 실제 송신 바이트 순서가 각각의 소유자 실행 문맥에서 분리되어 보장됩니다.</p>
 
 
 </section>
@@ -614,10 +762,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../servercore/3.buffer-management.html" class="pagination-link" aria-label="수신 버퍼">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">수신 버퍼</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./servercore/1.overview.html" class="pagination-link" aria-label="전체 구조">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">전체 구조</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../servercore/5.producer-consumer-backpressure.html" class="pagination-link" aria-label="SendQueue를 메모리 압력 측정 단위로">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SendQueue를 메모리 압력 측정 단위로</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="SessionManager, IoEvent, pending_io_, SessionState가 각각 어느 생존 범위를 판단하는지 분리합니다.">
 
-<title>ServerCore Portfolio</title>
+<title>2&nbsp; 제출된 I/O와 콜백 대상 생존 – ServerCore Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,27 +24,63 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./servercore/1.overview.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../servercore/3.buffer-management.html" rel="next">
+<link href="../servercore/1.overview.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -84,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">ServerCore Portfolio</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../servercore/1.overview.html">ServerCore Runtime</a></li><li class="breadcrumb-item"><a href="../servercore/2.lifecycle-management.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제출된 I/O와 콜백 대상 생존</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="검색" onclick="window.quartoOpenSearch();">
@@ -99,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">ServerCore Portfolio</a> 
+      <a href="../">ServerCore Portfolio</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -111,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">ServerCore Portfolio</span></a>
   </div>
 </li>
@@ -126,37 +163,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/1.overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/1.overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">전체 구조</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/2.lifecycle-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/2.lifecycle-management.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제출된 I/O와 콜백 대상 생존</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/3.buffer-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/3.buffer-management.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">수신 버퍼</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/4.concurrency-management.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/4.concurrency-management.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Room과 Session 직렬화</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/5.producer-consumer-backpressure.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/5.producer-consumer-backpressure.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">SendQueue를 메모리 압력 측정 단위로</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./servercore/6.summary.html" class="sidebar-item-text sidebar-link">
+  <a href="../servercore/6.summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">선택 모듈로 확장한 결과</span></span></a>
   </div>
 </li>
@@ -172,16 +209,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#servercore-portfolio" id="toc-servercore-portfolio" class="nav-link active" data-scroll-target="#servercore-portfolio">ServerCore Portfolio</a></li>
+  <li><a href="#dispatchresult-와-pending_io_" id="toc-dispatchresult-와-pending_io_" class="nav-link active" data-scroll-target="#dispatchresult-와-pending_io_"><span class="header-section-number">2.1</span> <code>DispatchResult</code> 와 <code>pending_io_</code></a></li>
+  <li><a href="#종료-상태와-해제-조건" id="toc-종료-상태와-해제-조건" class="nav-link" data-scroll-target="#종료-상태와-해제-조건"><span class="header-section-number">2.2</span> 종료 상태와 해제 조건</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../servercore/1.overview.html">ServerCore Runtime</a></li><li class="breadcrumb-item"><a href="../servercore/2.lifecycle-management.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제출된 I/O와 콜백 대상 생존</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">ServerCore Portfolio</h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제출된 I/O와 콜백 대상 생존</span></h1>
 </div>
 
 
@@ -189,12 +227,6 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">공개</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2026년 6월 7일</p>
-    </div>
-  </div>
   
     
   </div>
@@ -204,9 +236,159 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="servercore-portfolio" class="level1 unnumbered">
-<h1 class="unnumbered">ServerCore Portfolio</h1>
-<p>Linux <code>io_uring</code> 기반 비동기 서버 런타임 <code>ServerCore</code> 구현 포트폴리오</p>
+<p>클라이언트와 서버 간의 연결을 <code>Session</code>으로 관리하려고 하니 세션의 생존과 해제 조건이 명확하지 않다는 문제가 생겼습니다. 세션이 살아 있다는 말이 “세션이 연결 목록에 남아 있다”는 뜻인지, “이미 제출된 I/O의 CQE가 아직 돌아올 수 있다”는 뜻인지, “CQE 콜백을 실행하는 동안 콜백 대상이 파괴되지 않아야 한다”는 뜻인지가 서로 다르기 때문입니다. 그래서 세션 수명 관리 장치를 하나의 소유권 이야기로 합치는 것이 아니라, 각 장치가 보장하는 방식으로 수명 관리를 설계했습니다.</p>
+<p><code>SessionManager</code>는 외부에서 세션을 “현재 연결된 세션”으로 취급하는 동안의 소유자입니다. 하지만 이것만으로는 이미 <code>io_uring</code>에 제출된 I/O의 CQE 콜백 대상 생존을 보장할 수 없습니다.</p>
+<p><code>io_uring</code>의 SQE <code>user_data</code>에는 제출된 I/O 하나를 대표하는 <code>IoEvent*</code>가 들어갑니다. CQE가 도착하면 <code>IoRing</code>은 그 포인터를 복원하고, 이벤트 객체의 <code>Complete()</code>를 호출합니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/servercore/fig-servercore-cqe-dispatch.svg" class="img-fluid figure-img"></p>
+<figcaption>fig servercore cqe dispatch</figcaption>
+</figure>
+</div>
+<p><code>IoRing</code>은 이 이벤트가 <code>Session</code> 작업인지, <code>Listener</code> 작업인지 알 필요가 없습니다. <code>IoEvent::Complete()</code> 안에서 operation 타입별 <code>Dispatch()</code>가 실행되고, <code>RecvOp</code>, <code>SendOp</code>, <code>DisconnectOp</code>, <code>AcceptOp</code> 같은 제출 이벤트가 자기 owner의 handler로 완료를 넘깁니다.</p>
+<p>따라서 콜백 대상 생존은 <code>SessionManager</code>가 아니라 제출된 operation 객체가 보장합니다. <code>SessionManager</code>는 “현재 연결 목록”을 관리하고, 제출 이벤트는 “이미 커널에 제출된 I/O가 완료될 때까지 콜백 대상을 살려두는 책임”을 가집니다.</p>
+<section id="dispatchresult-와-pending_io_" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="dispatchresult-와-pending_io_"><span class="header-section-number">2.1</span> <code>DispatchResult</code> 와 <code>pending_io_</code></h2>
+<p>CQE를 처리한 뒤에는 두 가지를 따로 판단해야 합니다.</p>
+<ol type="1">
+<li>이번 CQE를 받은 <code>IoEvent</code> 객체를 끝내도 되는지</li>
+<li>세션 전체에서 아직 돌아오지 않은 제출 I/O가 남아 있는지</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/servercore/ioevent-lifetime.svg" class="img-fluid figure-img"></p>
+<figcaption>ioevent lifetime</figcaption>
+</figure>
+</div>
+<p>multishot 수신에서는 하나의 SQE가 여러 CQE를 만들 수 있습니다. 중간 CQE는 데이터를 하나 전달하지만, 같은 수신 제출은 계속 살아 있을 수 있습니다. 따라서 CQE 하나를 받았다고 해서 항상 제출 I/O 하나가 끝났다고 볼 수 없습니다.</p>
+<p>이를 분리하기 위해 이벤트 콜백은 <code>DispatchResult</code>를 반환하고, 세션은 제출 I/O 단위로 <code>pending_io_</code>를 관리합니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>경로</th>
+<th>CQE 의미</th>
+<th><code>DispatchResult</code></th>
+<th><code>pending_io_</code> 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>단일 송신 완료</td>
+<td>제출한 send 하나가 끝남</td>
+<td><code>kComplete</code></td>
+<td>감소</td>
+</tr>
+<tr class="even">
+<td>짧은 쓰기</td>
+<td>같은 <code>SendOp</code>를 남은 바이트로 재제출</td>
+<td><code>kPending</code></td>
+<td>재제출 성공 시 유지</td>
+</tr>
+<tr class="odd">
+<td>multishot 수신 중간 CQE</td>
+<td>같은 수신 제출이 계속 살아 있음</td>
+<td><code>kPending</code></td>
+<td>유지</td>
+</tr>
+<tr class="even">
+<td>multishot 수신 최종 CQE</td>
+<td>multishot 제출이 종료됨</td>
+<td><code>kComplete</code></td>
+<td>감소</td>
+</tr>
+<tr class="odd">
+<td>cancel/shutdown 완료</td>
+<td>종료용 제출이 완료됨</td>
+<td><code>kComplete</code></td>
+<td>감소</td>
+</tr>
+</tbody>
+</table>
+<p><code>kPending</code>은 이벤트 객체가 아직 끝나지 않았다는 뜻입니다. multishot receive에서 <code>IORING_CQE_F_MORE</code>가 붙은 CQE가 대표적입니다. 같은 수신 SQE에서 CQE가 더 올 수 있으므로 이벤트 객체를 유지하고, <code>pending_io_</code>도 감소시키지 않습니다.</p>
+<p>부분 send도 같은 이유로 <code>kPending</code>이 될 수 있습니다. CQE를 받은 뒤 같은 <code>SendOp</code>를 남은 바이트 범위의 새 send SQE에 다시 연결해야 하므로 이벤트 객체를 삭제하지 않습니다. 재제출이 성공하면 기존 제출 흐름을 유지하고, 재제출이 실패한 경우에만 <code>CompletePendingIo()</code>로 기존 제출분을 정리합니다.</p>
+<p><code>kComplete</code>는 이번 CQE 처리 뒤 이벤트 객체를 완료 처리할 수 있다는 뜻입니다. 단일 send 완료, cancel 완료, shutdown 완료, 또는 <code>IORING_CQE_F_MORE</code>가 없는 multishot 최종 CQE가 여기에 해당합니다.</p>
+<hr>
+</section>
+<section id="종료-상태와-해제-조건" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="종료-상태와-해제-조건"><span class="header-section-number">2.2</span> 종료 상태와 해제 조건</h2>
+<p><code>pending_io_</code>는 이미 제출된 I/O가 남았는지만 셉니다. 하지만 종료가 시작된 세션이 새 수신, 송신, 등록 작업을 받아도 되는지는 별도의 상태 판단입니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><code>SessionState</code></th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>kOpen</code></td>
+<td>정상 송수신 가능</td>
+</tr>
+<tr class="even">
+<td><code>kClosing</code></td>
+<td>종료 시작, 새 일반 작업 차단</td>
+</tr>
+<tr class="odd">
+<td><code>kDraining</code></td>
+<td>종료 관련 제출 이후 남은 CQE를 비우는 중</td>
+</tr>
+<tr class="even">
+<td><code>kClosed</code></td>
+<td>연결 종료 통지와 manager 해제 완료</td>
+</tr>
+</tbody>
+</table>
+<p>종료 흐름은 “새 작업 차단 → 종료 관련 작업 제출 → 남은 CQE 비우기 → 한 번만 해제” 순서로 진행됩니다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/servercore/session-close-flow-timeline.svg" class="img-fluid figure-img"></p>
+<figcaption>session close flow timeline</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li><code>Disconnect()</code>가 호출되면 <code>SessionState</code>를 <code>kClosing</code>으로 전환합니다.</li>
+<li><code>kOpen</code>이 아니면 새 수신, 새 송신, 새 등록 작업을 차단합니다.</li>
+<li>이미 큐에 들어간 송신 데이터는 정책에 따라 폐기하거나, 종료 전에 drain할지 결정합니다.</li>
+<li>취소, <code>shutdown</code>, close 관련 정리처럼 커널 제출이 필요한 종료 작업을 등록합니다.</li>
+<li>제출에 성공한 종료 작업은 <code>pending_io_</code>에 반영합니다.</li>
+<li>CQE가 도착할 때마다 이벤트 dispatch가 <code>DispatchResult</code>를 반환합니다.</li>
+<li>최종 완료 CQE는 <code>pending_io_</code>를 감소시킵니다.</li>
+<li><code>ClosingStarted() &amp;&amp; pending_io_ == 0 &amp;&amp; !disconnected_notified_</code> 조건을 통과하면 <code>TryRelease()</code>가 <code>OnDisconnected()</code>와 manager 해제를 한 번만 실행합니다.</li>
+<li>해제가 끝나면 상태를 <code>kClosed</code>로 전환합니다.</li>
+</ol>
+<p><code>SessionState</code>가 없으면 이미 종료가 시작된 세션에 새 작업이 다시 들어갈 수 있습니다. 예를 들어 수신 CQE에서 <code>res == 0</code>을 보고 peer close를 감지해 종료를 시작했는데, 다른 경로의 <code>Send()</code>나 <code>RegisterRecv()</code>가 아직 세션을 정상 상태로 보고 새 SQE를 제출할 수 있습니다.</p>
+<p>이 경우 닫히는 세션에 multishot recv가 다시 걸리거나, 이미 닫히는 소켓에 새 송신이 들어가거나, drain 중이던 <code>pending_io_</code>가 다시 증가할 수 있습니다. 더 나쁘게는 서로 다른 CQE 경로가 동시에 종료 조건을 만족해 <code>OnDisconnected()</code>가 중복 호출될 수도 있습니다.</p>
+<p>따라서 <code>pending_io_</code>는 이미 제출한 I/O가 모두 끝났는지 를 판단하고, <code>SessionState</code>는 지금 새 작업을 받아도 되는지 를 판단합니다. 둘 중 하나만으로는 안전한 종료 조건을 만들 수 없습니다.</p>
+<p>세션 해제는 다음 조건이 모두 만족될 때만 가능합니다.</p>
+<pre class="text"><code>1. 세션이 종료를 시작한 상태.
+2. 새 일반 작업이 차단되어 있음.
+3. 이미 제출된 I/O의 최종 CQE가 모두 돌아왔음.
+4. 종료 통지가 아직 실행되지 않았음.</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Session<span class="op">::</span>CanRelease<span class="op">()</span> <span class="at">const</span> <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ClosingStarted<span class="op">()</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;&amp;</span> <span class="va">pending_io_</span> <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="va">disconnected_notified_</span><span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>TryRelease()</code>는 이 조건을 통과한 경우에만 <code>OnDisconnected()</code>와 <code>SessionManager</code> 해제를 수행합니다. 또한 <code>disconnected_notified_</code>를 통해 동일 세션의 종료 통지가 한 번만 실행되게 보장합니다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Session<span class="op">::</span>TryRelease<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>CanRelease<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">disconnected_notified_</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">state_</span> <span class="op">=</span> SessionState<span class="op">::</span>kClosed<span class="op">;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    OnDisconnected<span class="op">();</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">manager_</span><span class="op">-&gt;</span>Remove<span class="op">(</span><span class="va">session_id_</span><span class="op">);</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></div>
+<p>수명 관리는 하나의 세션 소유자를 관리하는것이 아니라, 각 장치가 보장하는 방식으로 설계되었습니다. <code>SessionManager</code>는 외부에 노출되는 연결 목록을 관리하고, <code>OwnerBoundEvent</code>는 CQE 콜백 대상의 생존을 보장하며, <code>DispatchResult</code>는 이벤트를 완료할지 유지할지 재사용할지 결정합니다. 여기에 <code>pending_io_</code>가 최종 CQE 대기 수를 추적하고, <code>SessionState</code>가 새 작업 허용 여부와 종료 단계를 막아 줍니다.</p>
+<p>결국 세션은 새 작업이 차단되고, 제출된 I/O의 최종 CQE가 모두 돌아오고, 종료 통지가 아직 실행되지 않았을 때만 해제될 수 있습니다. 이 경계가 닫혀야 이후 장에서 다루는 버퍼와 송신 큐도 반환된 세션이나 버퍼를 다시 참조하지 않습니다.</p>
 
 
 </section>
@@ -614,10 +796,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../servercore/1.overview.html" class="pagination-link" aria-label="전체 구조">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">전체 구조</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./servercore/1.overview.html" class="pagination-link" aria-label="전체 구조">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">전체 구조</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../servercore/3.buffer-management.html" class="pagination-link" aria-label="수신 버퍼">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">수신 버퍼</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
